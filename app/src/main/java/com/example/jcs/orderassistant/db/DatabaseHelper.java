@@ -2,41 +2,35 @@
  * Created by JCS on 2015/9/30.
  */
 
-package com.example.jcs.orderassistant;
+package com.example.jcs.orderassistant.db;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.util.Log;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.jcs.orderassistant.DatabaseSchema.MemberEntry;
-import com.example.jcs.orderassistant.DatabaseSchema.OrderEntry;
-import com.example.jcs.orderassistant.DatabaseSchema.SubOrderEntry;
-import com.example.jcs.orderassistant.OrderApplication;
 
 @SuppressWarnings("deprecation")
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "orderAssistant_db";
 
-    private static final String Order_TABLE_CREATE = "create table " + OrderEntry.TABLE_NAME + " ("
-            + OrderEntry._ID                      + " integer primary key autoincrement, "
-            + OrderEntry.COLUMN_DATE                + " integer default 0, "
-            + OrderEntry.COLUMN_return              + " integer default 0 "
+    private static final String Order_TABLE_CREATE = "create table " + DatabaseSchema.OrderEntry.TABLE_NAME + " ("
+            + DatabaseSchema.OrderEntry._ID                      + " integer primary key autoincrement, "
+            + DatabaseSchema.OrderEntry.COLUMN_DATE                + " integer default 0, "
+            + DatabaseSchema.OrderEntry.COLUMN_RETURN              + " integer default 0 "
             + ");";
 
-    private static final String SubOrder_TABLE_CREATE = "create table " + SubOrderEntry.TABLE_NAME + " ("
-            + SubOrderEntry._ID                      + " integer primary key autoincrement, "
-            + SubOrderEntry.COLUMN_ORDERID          + " integer default 0, "
-            + SubOrderEntry.COLUMN_SUM          + " float default 0, "
-            + SubOrderEntry.COLUMN_MEMBER         + " integer default 0,"
-            + "FOREIGN KEY (" 	+ SubOrderEntry.COLUMN_ORDERID + ") REFERENCES " + OrderEntry.TABLE_NAME + " (" + OrderEntry._ID + ") ON DELETE SET NULL "
+    private static final String SubOrder_TABLE_CREATE = "create table " + DatabaseSchema.SubOrderEntry.TABLE_NAME + " ("
+            + DatabaseSchema.SubOrderEntry._ID                      + " integer primary key autoincrement, "
+            + DatabaseSchema.SubOrderEntry.COLUMN_ORDERID          + " integer default 0, "
+            + DatabaseSchema.SubOrderEntry.COLUMN_SUM          + " float default 0, "
+            + DatabaseSchema.SubOrderEntry.COLUMN_MEMBER         + " integer default 0,"
+            + "FOREIGN KEY (" 	+ DatabaseSchema.SubOrderEntry.COLUMN_ORDERID + ") REFERENCES " + DatabaseSchema.OrderEntry.TABLE_NAME + " (" + DatabaseSchema.OrderEntry._ID + ") ON DELETE SET NULL "
             + ");";
 
-    private static final String Member_TABLE_CREATE = "create table " + MemberEntry.TABLE_NAME + " ("
-            + MemberEntry._ID                      + " integer primary key autoincrement, "
-            + MemberEntry.COLUMN_NAME          + " varchar(255), "
-            + MemberEntry.COLUMN_MONEY          + " float default 0 "
+    private static final String Member_TABLE_CREATE = "create table " + DatabaseSchema.MemberEntry.TABLE_NAME + " ("
+            + DatabaseSchema.MemberEntry._ID                      + " integer primary key autoincrement, "
+            + DatabaseSchema.MemberEntry.COLUMN_NAME          + " varchar(255), "
+            + DatabaseSchema.MemberEntry.COLUMN_MONEY          + " float default 0 "
             + ");";
 
     /**

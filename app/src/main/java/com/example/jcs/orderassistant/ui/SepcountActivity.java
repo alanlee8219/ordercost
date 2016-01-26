@@ -1,4 +1,4 @@
-package com.example.jcs.orderassistant;
+package com.example.jcs.orderassistant.ui;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -6,8 +6,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -15,6 +13,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.jcs.orderassistant.db.DatabaseHelper;
+import com.example.jcs.orderassistant.db.DatabaseSchema;
+import com.example.jcs.orderassistant.R;
+import com.example.jcs.orderassistant.app.OrderApplication;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -104,7 +107,7 @@ public class SepcountActivity extends Activity {
         long time = fortmatDateTime();
         values.put(DatabaseSchema.OrderEntry.COLUMN_DATE, time);
         int m = Integer.parseInt(c);
-        values.put(DatabaseSchema.OrderEntry.COLUMN_return, m);
+        values.put(DatabaseSchema.OrderEntry.COLUMN_RETURN, m);
         long ordid = db.insert(DatabaseSchema.OrderEntry.TABLE_NAME, null, values);
         values.clear();
 

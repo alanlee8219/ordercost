@@ -1,17 +1,20 @@
-package com.example.jcs.orderassistant;
+package com.example.jcs.orderassistant.ui;
 
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.example.jcs.orderassistant.db.DatabaseHelper;
+import com.example.jcs.orderassistant.db.DatabaseSchema;
+import com.example.jcs.orderassistant.R;
+import com.example.jcs.orderassistant.app.OrderApplication;
 
 import java.util.ArrayList;
 import java.util.List;

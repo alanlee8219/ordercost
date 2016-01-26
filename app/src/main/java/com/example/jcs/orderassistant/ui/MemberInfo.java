@@ -1,4 +1,4 @@
-package com.example.jcs.orderassistant;
+package com.example.jcs.orderassistant.ui;
 
 /**
  * Created by JCS on 2015/10/9.

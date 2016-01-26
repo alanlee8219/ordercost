@@ -1,10 +1,10 @@
-package com.example.jcs.orderassistant;
+package com.example.jcs.orderassistant.app;
 
 import android.util.Log;
 import android.app.Application;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import com.example.jcs.orderassistant.DatabaseHelper;
+import com.example.jcs.orderassistant.db.DatabaseHelper;
 
 
 /**

@@ -1,15 +1,12 @@
-package com.example.jcs.orderassistant;
+package com.example.jcs.orderassistant.ui;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
@@ -17,18 +14,19 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
-import com.example.jcs.orderassistant.DatabaseSchema.OrderEntry;
-import com.example.jcs.orderassistant.DatabaseSchema.SubOrderEntry;
-import com.example.jcs.orderassistant.DatabaseSchema.MemberEntry;
+import com.example.jcs.orderassistant.db.DatabaseHelper;
+import com.example.jcs.orderassistant.db.DatabaseSchema;
+import com.example.jcs.orderassistant.db.DatabaseSchema.OrderEntry;
+import com.example.jcs.orderassistant.db.DatabaseSchema.SubOrderEntry;
+import com.example.jcs.orderassistant.db.DatabaseSchema.MemberEntry;
+import com.example.jcs.orderassistant.R;
+import com.example.jcs.orderassistant.app.OrderApplication;
 
 public class AACountActivity extends Activity {
 
@@ -116,7 +114,7 @@ public class AACountActivity extends Activity {
         long time = fortmatDateTime();
         values.put(OrderEntry.COLUMN_DATE, time);
         int m = Integer.parseInt(c);
-        values.put(OrderEntry.COLUMN_return, m);
+        values.put(OrderEntry.COLUMN_RETURN, m);
         long ordid = db.insert(OrderEntry.TABLE_NAME, null, values);
         values.clear();
 

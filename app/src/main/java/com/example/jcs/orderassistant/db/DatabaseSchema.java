@@ -1,4 +1,4 @@
-package com.example.jcs.orderassistant; /**
+package com.example.jcs.orderassistant.db; /**
  * Created by JCS on 2015/9/30.
  */
 
@@ -17,7 +17,7 @@ public class DatabaseSchema {
 
         public static final String COLUMN_DATE = "order_date";
 
-        public static final String COLUMN_return = "cash_back";
+        public static final String COLUMN_RETURN = "cash_back";
 
     };
 

@@ -1,4 +1,4 @@
-package com.example.jcs.orderassistant;
+package com.example.jcs.orderassistant.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.jcs.orderassistant.DatabaseSchema.MemberEntry;
+import com.example.jcs.orderassistant.db.DatabaseHelper;
+import com.example.jcs.orderassistant.db.DatabaseSchema.MemberEntry;
+import com.example.jcs.orderassistant.R;
+import com.example.jcs.orderassistant.app.OrderApplication;
 
 public class MainActivity extends Activity {
 

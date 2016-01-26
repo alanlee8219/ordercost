@@ -3,13 +3,13 @@
     package="com.example.jcs.orderassistant" >
 
     <application
-        android:name=".OrderApplication"
+        android:name=".app.OrderApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,19 +18,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AACountActivity"
+            android:name=".ui.AACountActivity"
             android:label="@string/title_activity_aacount" >
         </activity>
         <activity
-            android:name=".AddMemberActivity"
+            android:name=".ui.AddMemberActivity"
             android:label="@string/title_activity_add_member" >
         </activity>
         <activity
-            android:name=".SepcountActivity"
+            android:name=".ui.SepcountActivity"
             android:label="@string/title_activity_sepcount" >
         </activity>
         <activity
-            android:name=".ReceiveMoneyActivity"
+            android:name=".ui.ReceiveMoneyActivity"
             android:label="@string/title_activity_receive_money" >
         </activity>
     </application>
