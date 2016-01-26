@@ -152,7 +152,7 @@ public class AACountActivity extends Activity {
                 db.insert(SubOrderEntry.TABLE_NAME, null, values);
                 //设置余额
                 values.clear();
-                values.put(MemberEntry.COLUMN_MONEY, memberList.get(i).getSum()-each-return_each);
+                values.put(MemberEntry.COLUMN_MONEY, memberList.get(i).getSum()-each+return_each);
                 String idquery = ""+ MemberEntry._ID + "= ?";
                 String[] arry = new String[1];
                 arry[0] = Integer.toString(memberList.get(i).getId());
