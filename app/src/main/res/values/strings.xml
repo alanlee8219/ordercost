@@ -14,6 +14,7 @@
     <string name="input">请输入</string>
     <string name="cashback">返现</string>
     <string name="save">保存</string>
+    <string name="dinning">商家</string>
 
     <string name="title_activity_add_member">AddMemberActivity</string>
     <string name="member_name">姓名</string>

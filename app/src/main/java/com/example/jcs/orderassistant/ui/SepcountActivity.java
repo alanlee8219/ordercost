@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
+import com.example.jcs.orderassistant.ui.UiUtility;
 
 
 public class SepcountActivity extends Activity {
@@ -86,16 +87,12 @@ public class SepcountActivity extends Activity {
         });
     }
 
-    public static boolean isInteger(String str) {
-        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-        return pattern.matcher(str).matches();
-    }
     private void saveSepCount()
     {
         EditText cashback = (EditText) findViewById(R.id.sep_return);
         String c = cashback.getText().toString();
 
-        if (!isInteger(c)){
+        if (!UiUtility.isInteger(c)){
             Toast.makeText(SepcountActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -104,7 +101,7 @@ public class SepcountActivity extends Activity {
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        long time = fortmatDateTime();
+        long time = UiUtility.fortmatDateTime(year,month,day);
         values.put(DatabaseSchema.OrderEntry.COLUMN_DATE, time);
         int m = Integer.parseInt(c);
         values.put(DatabaseSchema.OrderEntry.COLUMN_RETURN, m);
@@ -156,16 +153,7 @@ public class SepcountActivity extends Activity {
             }
         }
     }
-    private static long fortmatDateTime(){
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        cal.set(Calendar.YEAR,SepcountActivity.year);
-        cal.set(Calendar.MONTH,SepcountActivity.month);
-        cal.set(Calendar.DAY_OF_MONTH,SepcountActivity.day);
-        cal.set(Calendar.HOUR_OF_DAY,0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        return cal.getTimeInMillis();
-    }
+
     private void getMemberInfo()
     {
         memberList.clear();

@@ -19,6 +19,11 @@ public class DatabaseSchema {
 
         public static final String COLUMN_RETURN = "cash_back";
 
+        public static final String COLUMN_DINING = "dining";
+
+        public static final String COLUMN_TYPE= "order_type";
+
+
     };
 
     public static abstract class SubOrderEntry implements BaseColumns {

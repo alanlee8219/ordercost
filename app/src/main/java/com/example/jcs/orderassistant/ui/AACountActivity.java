@@ -27,6 +27,7 @@ import com.example.jcs.orderassistant.db.DatabaseSchema.SubOrderEntry;
 import com.example.jcs.orderassistant.db.DatabaseSchema.MemberEntry;
 import com.example.jcs.orderassistant.R;
 import com.example.jcs.orderassistant.app.OrderApplication;
+import com.example.jcs.orderassistant.ui.UiUtility;
 
 public class AACountActivity extends Activity {
 
@@ -40,9 +41,10 @@ public class AACountActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aacount);
+        setTitle("AA记账");
 
         listView = (ListView) findViewById(R.id.member_lv);
-        getMemberInfo();
+        memberList = UiUtility.getMemberInfo();
         MemberAdapter adapter = new MemberAdapter(AACountActivity.this,R.layout.select_member_item,memberList);
         listView.setAdapter(adapter);
 
@@ -62,7 +64,7 @@ public class AACountActivity extends Activity {
 
 
         final Button button_date = (Button) findViewById(R.id.AADateButton);
-        button_date.setText(Calendar.YEAR+"年"+Calendar.MONTH+"月"+Calendar.DAY_OF_MONTH+"日");
+        button_date.setText(AACountActivity.year+"年"+(AACountActivity.month+1)+"月"+AACountActivity.day+"日");
         button_date.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -74,7 +76,7 @@ public class AACountActivity extends Activity {
                             @Override
                             public void onDateSet(DatePicker view,int year, int monthOfYear, int dayOfMonth)
                             {
-                                button_date.setText(year+"年"+monthOfYear+"月"+dayOfMonth + "日");
+                                button_date.setText(year+"年"+(monthOfYear+1)+"月"+dayOfMonth + "日");
                                 AACountActivity.year = year;
                                 AACountActivity.month = monthOfYear;
                                 AACountActivity.day = dayOfMonth;
@@ -83,8 +85,6 @@ public class AACountActivity extends Activity {
                         ,calendar.get(Calendar.YEAR)
                         ,calendar.get(Calendar.MONTH)
                         ,calendar.get(Calendar.DAY_OF_MONTH)).show();
-                saveAACount();
-                finish();
             }
         });
     }
@@ -94,6 +94,8 @@ public class AACountActivity extends Activity {
     {
         EditText sum = (EditText) findViewById(R.id.aa_sum);
         String s = sum.getText().toString();
+        EditText dinning = (EditText) findViewById(R.id.dinning);
+        String d = dinning.getText().toString();
 
         EditText cashback = (EditText) findViewById(R.id.aa_return);
         String c = cashback.getText().toString();
@@ -102,7 +104,7 @@ public class AACountActivity extends Activity {
             Toast.makeText(AACountActivity.this, "请输入金额", Toast.LENGTH_SHORT).show();
             return;
         }
-        if ((!isInteger(s)) || !isInteger(c)){
+        if ((!UiUtility.isInteger(s)) || !UiUtility.isInteger(c)){
             Toast.makeText(AACountActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -111,10 +113,12 @@ public class AACountActivity extends Activity {
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        long time = fortmatDateTime();
+        long time = UiUtility.fortmatDateTime(year,month,day);
         values.put(OrderEntry.COLUMN_DATE, time);
         int m = Integer.parseInt(c);
         values.put(OrderEntry.COLUMN_RETURN, m);
+        values.put(OrderEntry.COLUMN_DINING, d);
+        values.put(OrderEntry.COLUMN_TYPE, 0);
         long ordid = db.insert(OrderEntry.TABLE_NAME, null, values);
         values.clear();
 
@@ -160,35 +164,6 @@ public class AACountActivity extends Activity {
             }else {
                 ;
             }
-        }
-    }
-
-    private static long fortmatDateTime(){
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        cal.set(Calendar.YEAR,AACountActivity.year);
-        cal.set(Calendar.MONTH,AACountActivity.month);
-        cal.set(Calendar.DAY_OF_MONTH,AACountActivity.day);
-        cal.set(Calendar.HOUR_OF_DAY,0);
-        cal.set(Calendar.MINUTE,0);
-        cal.set(Calendar.SECOND, 0);
-        return cal.getTimeInMillis();
-    }
-
-    public static boolean isInteger(String str) {
-        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-        return pattern.matcher(str).matches();
-    }
-
-    private void getMemberInfo()
-    {
-        memberList.clear();
-        DatabaseHelper dbHelper = OrderApplication.getDbHelper();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String query = "select * from " + DatabaseSchema.MemberEntry.TABLE_NAME;
-        Cursor cursor = db.rawQuery(query,null);
-        while (cursor.moveToNext()){
-            MemberInfoWithId info = new MemberInfoWithId(cursor.getInt(0),cursor.getString(1),cursor.getFloat(2));
-            memberList.add(info);
         }
     }
 }

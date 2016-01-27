@@ -13,6 +13,7 @@ import com.example.jcs.orderassistant.db.DatabaseHelper;
 import com.example.jcs.orderassistant.R;
 import com.example.jcs.orderassistant.app.OrderApplication;
 import com.example.jcs.orderassistant.db.DatabaseSchema.MemberEntry;
+import com.example.jcs.orderassistant.ui.UiUtility;
 
 
 
@@ -33,7 +34,7 @@ public class AddMemberActivity extends Activity {
                 String name = editText1.getText().toString();
                 EditText editText2 = (EditText) findViewById(R.id.addM_initBalance);
                 String money = editText2.getText().toString();
-                addMember(name,money);
+                addMember(name, money);
                 finish();
             }
         });
@@ -49,7 +50,7 @@ public class AddMemberActivity extends Activity {
             Toast.makeText(AddMemberActivity.this,"请输入金额",Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!isInteger(money)){
+        if (!UiUtility.isInteger(money)){
             Toast.makeText(AddMemberActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -61,11 +62,6 @@ public class AddMemberActivity extends Activity {
         values.put(MemberEntry.COLUMN_MONEY,m);
         db.insert(MemberEntry.TABLE_NAME, null, values);
         //Todo 这里需要先查询数据库是否已经有这个名字
-    }
-
-    public static boolean isInteger(String str) {
-        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
-        return pattern.matcher(str).matches();
     }
 
 /*    @Override

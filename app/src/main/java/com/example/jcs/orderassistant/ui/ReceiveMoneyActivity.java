@@ -15,6 +15,7 @@ import com.example.jcs.orderassistant.db.DatabaseHelper;
 import com.example.jcs.orderassistant.db.DatabaseSchema;
 import com.example.jcs.orderassistant.R;
 import com.example.jcs.orderassistant.app.OrderApplication;
+import com.example.jcs.orderassistant.ui.UiUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ReceiveMoneyActivity extends Activity {
         setContentView(R.layout.activity_receive_money);
 
         listView = (ListView) findViewById(R.id.member_rm_lv);
-        getMemberInfo();
+        memberList = UiUtility.getMemberInfo();
         MemberWithMAdapter adapter = new MemberWithMAdapter(ReceiveMoneyActivity.this,R.layout.select_member_withm_item,memberList);
         listView.setAdapter(adapter);
 
@@ -43,19 +44,6 @@ public class ReceiveMoneyActivity extends Activity {
                 finish();
             }
         });
-    }
-
-    private void getMemberInfo()
-    {
-        memberList.clear();
-        DatabaseHelper dbHelper = OrderApplication.getDbHelper();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String query = "select * from " + DatabaseSchema.MemberEntry.TABLE_NAME;
-        Cursor cursor = db.rawQuery(query,null);
-        while (cursor.moveToNext()){
-            MemberInfoWithId info = new MemberInfoWithId(cursor.getInt(0),cursor.getString(1),cursor.getFloat(2));
-            memberList.add(info);
-        }
     }
 
     private void saveRMCount()

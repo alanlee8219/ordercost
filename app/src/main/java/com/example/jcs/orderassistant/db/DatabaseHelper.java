@@ -17,6 +17,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + DatabaseSchema.OrderEntry._ID                      + " integer primary key autoincrement, "
             + DatabaseSchema.OrderEntry.COLUMN_DATE                + " integer default 0, "
             + DatabaseSchema.OrderEntry.COLUMN_RETURN              + " integer default 0 "
+            + DatabaseSchema.OrderEntry.COLUMN_DINING              + " varchar(255), "
+            + DatabaseSchema.OrderEntry.COLUMN_TYPE              + " integer default 0 "
             + ");";
 
     private static final String SubOrder_TABLE_CREATE = "create table " + DatabaseSchema.SubOrderEntry.TABLE_NAME + " ("
