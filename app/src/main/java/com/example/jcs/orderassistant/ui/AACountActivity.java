@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
@@ -40,8 +41,10 @@ public class AACountActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_aacount);
-        setTitle("AA记账");
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_header);
+        //setTitle("AA记账");
 
         listView = (ListView) findViewById(R.id.member_lv);
         memberList = UiUtility.getMemberInfo();

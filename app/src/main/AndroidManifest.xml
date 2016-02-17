@@ -8,6 +8,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+		
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name" >
@@ -19,6 +20,7 @@
         </activity>
         <activity
             android:name=".ui.AACountActivity"
+            android:theme= "@style/activityTitlebar"
             android:label="@string/title_activity_aacount" >
         </activity>
         <activity
