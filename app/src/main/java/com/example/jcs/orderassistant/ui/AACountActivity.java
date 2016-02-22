@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,6 +57,14 @@ public class AACountActivity extends Activity {
             @Override
             public void onClick(View v) {
                 saveAACount();
+                finish();
+            }
+        });
+
+        Button return_button = (Button) findViewById(R.id.header_return);
+        return_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });
