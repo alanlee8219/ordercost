@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<color name="white">#FFFFFF</color>
+<color name="black">#000000</color>
+<color name="gray">#aaaaaa</color>
+<color name="light_blue">#6593cb</color>
+
+<!-- 标题栏按钮背景颜色 -->
+<drawable name="button_backward_pressed">#FF3030</drawable>
+<drawable name="button_backward_normal">#0000</drawable>
+</resources>

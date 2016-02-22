@@ -19,8 +19,8 @@
         </activity>
         <activity
             android:name=".ui.AACountActivity"
-            android:theme= "@style/activityTitlebar"
-            android:label="@string/title_activity_aacount" >
+            android:label="@string/title_activity_aacount"
+            android:theme="@style/activityTitlebar" >
         </activity>
         <activity
             android:name=".ui.AddMemberActivity"
@@ -33,6 +33,10 @@
         <activity
             android:name=".ui.ReceiveMoneyActivity"
             android:label="@string/title_activity_receive_money" >
+        </activity>
+        <activity
+            android:name=".ui.BanlaceActivity"
+            android:label="@string/title_activity_banlace" >
         </activity>
     </application>
 
