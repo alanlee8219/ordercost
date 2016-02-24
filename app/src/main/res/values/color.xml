@@ -4,6 +4,13 @@
 <color name="black">#000000</color>
 <color name="gray">#aaaaaa</color>
 <color name="light_blue">#6593cb</color>
+    <color name="test_spacing2">#179641</color>
+    <color name="test_spacing3">#B2DB4D</color>
+    <color name="colorPrimary">#f46444</color>
+    <color name="custom_imoocstyle">#eb4f38</color>
+    <color name="test_spacing1">#9674FC</color>
+    <color name="colorPrimaryDarkTrans">#CCf57257</color>
+    <color name="colorPrimaryDark">#f57257</color>
 
 <!-- 标题栏按钮背景颜色 -->
 <drawable name="button_backward_pressed">#FF3030</drawable>

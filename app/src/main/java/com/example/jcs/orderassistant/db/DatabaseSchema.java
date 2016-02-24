@@ -30,7 +30,7 @@ public class DatabaseSchema {
 
         public static final String TABLE_NAME = "suborder";
 
-        public static final String COLUMN_ORDERID = "suborder_id";
+        public static final String COLUMN_ORDERID = "order_id";
 
         public static final String COLUMN_SUBORDERID = "suborder_id";
 

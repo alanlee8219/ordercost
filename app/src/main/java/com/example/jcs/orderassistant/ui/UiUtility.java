@@ -9,6 +9,7 @@ import com.example.jcs.orderassistant.db.DatabaseSchema;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -28,6 +29,12 @@ public class UiUtility {
         cal.set(Calendar.MINUTE,0);
         cal.set(Calendar.SECOND, 0);
         return cal.getTimeInMillis();
+    }
+
+    public static String GetDateInfo(long millis){
+        Date date=new Date(millis);
+        java.text.SimpleDateFormat format=new java.text.SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
     }
 
     public static boolean isInteger(String str) {
