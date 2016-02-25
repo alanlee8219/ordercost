@@ -35,6 +35,7 @@ public class DealInfoAdapter extends ArrayAdapter<DealInfo> {
         date.setText(info.getDate());
         final TextView money = (TextView) view.findViewById(R.id.moneyText);
         String mm = Integer.toString(info.getMoney());
+        mm+=".00";
         money.setText(mm);
 
         return view;

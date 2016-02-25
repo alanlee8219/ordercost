@@ -7,11 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jcs.orderassistant.db.DatabaseHelper;
@@ -38,7 +40,13 @@ public class SepcountActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_sepcount);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_header);
+
+        TextView header = (TextView) findViewById(R.id.header_text);
+        header.setText("分别记账");
+
         listView = (ListView) findViewById(R.id.member_sep_lv);
         getMemberInfo();
         MemberWithMAdapter adapter = new MemberWithMAdapter(SepcountActivity.this,R.layout.select_member_withm_item,memberList);
@@ -59,9 +67,9 @@ public class SepcountActivity extends Activity {
         SepcountActivity.day = calendar1.get(Calendar.DAY_OF_MONTH);;
 
 
-        final Button button_date1 = (Button) findViewById(R.id.SepDateButton);
-        button_date1.setText(Calendar.YEAR+"年"+Calendar.MONTH+"月"+Calendar.DAY_OF_MONTH+"日");
-        button_date1.setOnClickListener(new View.OnClickListener()
+        final Button button_date = (Button) findViewById(R.id.SepDateButton);
+        button_date.setText(SepcountActivity.year+"年"+(SepcountActivity.month+1)+"月"+SepcountActivity.day+"日");
+        button_date.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
@@ -72,7 +80,7 @@ public class SepcountActivity extends Activity {
                             @Override
                             public void onDateSet(DatePicker view,int year, int monthOfYear, int dayOfMonth)
                             {
-                                button_date1.setText(year+"年"+monthOfYear+"月"+dayOfMonth + "日");
+                                button_date.setText(year+"年"+(monthOfYear+1)+"月"+dayOfMonth + "日");
                                 SepcountActivity.year = year;
                                 SepcountActivity.month = monthOfYear;
                                 SepcountActivity.day = dayOfMonth;
@@ -81,8 +89,6 @@ public class SepcountActivity extends Activity {
                         ,calendar.get(Calendar.YEAR)
                         ,calendar.get(Calendar.MONTH)
                         ,calendar.get(Calendar.DAY_OF_MONTH)).show();
-                saveSepCount();
-                finish();
             }
         });
     }
@@ -91,6 +97,9 @@ public class SepcountActivity extends Activity {
     {
         EditText cashback = (EditText) findViewById(R.id.sep_return);
         String c = cashback.getText().toString();
+
+        EditText dinning = (EditText) findViewById(R.id.sep_dinning);
+        String d = dinning.getText().toString();
 
         if (!UiUtility.isInteger(c)){
             Toast.makeText(SepcountActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
@@ -105,16 +114,12 @@ public class SepcountActivity extends Activity {
         values.put(DatabaseSchema.OrderEntry.COLUMN_DATE, time);
         int m = Integer.parseInt(c);
         values.put(DatabaseSchema.OrderEntry.COLUMN_RETURN, m);
+        values.put(DatabaseSchema.OrderEntry.COLUMN_DINING, d);
+        values.put(DatabaseSchema.OrderEntry.COLUMN_TYPE, 1);
         long ordid = db.insert(DatabaseSchema.OrderEntry.TABLE_NAME, null, values);
         values.clear();
 
-        /*String query = "select last last_insert_rowid() from "+OrderEntry.TABLE_NAME;
-        Cursor cursor = db.rawQuery(query,null);
-        int ordid = 0;
-        if (cursor.moveToFirst()) ordid = cursor.getInt(0);*/
-
         //加子订单
-
         int count = 0;
         for (int i=0;i<listView.getChildCount();i++)
         {

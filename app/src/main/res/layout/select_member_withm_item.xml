@@ -9,12 +9,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
+        android:textColor="@color/black"
         android:drawableLeft="?android:attr/listChoiceIndicatorMultiple"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/input"
+        android:textColor="@color/black"
         android:layout_weight="1"/>
 
     <EditText

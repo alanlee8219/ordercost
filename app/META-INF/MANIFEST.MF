@@ -1,0 +1,64 @@
+Manifest-Version: 1.0
+Built-By: 1.2.3
+Created-By: Android Gradle 1.2.3
+
+Name: res/mipmap-mdpi-v4/ic_launcher.png
+SHA1-Digest: KhYs3OgngrsQpHbyXG/jm5H+8wU=
+
+Name: res/layout/select_member_withm_item.xml
+SHA1-Digest: oVkrBzanU8eYy7kuLeE4zbYLRN8=
+
+Name: AndroidManifest.xml
+SHA1-Digest: cUPXdew8MxUq7JdQ5PRBUQYV57I=
+
+Name: res/menu/menu_receive_money.xml
+SHA1-Digest: pI54lSf7DjrTdg9kDlzJ6ITEi+U=
+
+Name: res/layout/select_member_item.xml
+SHA1-Digest: jN4ANg0o+s4xdumyaeErOWHvogE=
+
+Name: res/layout/activity_add_member.xml
+SHA1-Digest: YjSm1q0wKfHs3oNocKkOyA4/lII=
+
+Name: res/layout/activity_receive_money.xml
+SHA1-Digest: bfQaTd4gDyRu54LUMmv0+ikzxZc=
+
+Name: res/menu/menu_add_member.xml
+SHA1-Digest: pI54lSf7DjrTdg9kDlzJ6ITEi+U=
+
+Name: res/layout/activity_main.xml
+SHA1-Digest: 1t1nkP7r+7Wk/G9sZ0jwblYZ4i0=
+
+Name: res/layout/activity_sepcount.xml
+SHA1-Digest: VBr4bmH9btaHsmW4TkTC82+0+F8=
+
+Name: res/mipmap-xhdpi-v4/ic_launcher.png
+SHA1-Digest: A92PbPheHa+C5hP2bAXLmZFjEYY=
+
+Name: res/mipmap-hdpi-v4/ic_launcher.png
+SHA1-Digest: dgOODFlTpfHDDTUL6xuLQSdAG7w=
+
+Name: res/layout/balance_item.xml
+SHA1-Digest: Ei4PUtaBMpr5nHPDNJzxwQisPic=
+
+Name: res/menu/menu_sepcount.xml
+SHA1-Digest: pI54lSf7DjrTdg9kDlzJ6ITEi+U=
+
+Name: res/menu/menu_main.xml
+SHA1-Digest: MpA9Bcuh5ctElurmYw/AqbArCno=
+
+Name: resources.arsc
+SHA1-Digest: nMptjAl1/eIQrjtBzZpKHOeV2tI=
+
+Name: classes.dex
+SHA1-Digest: 9x5ZnBHlE9ozQV9eldvegtw+UvM=
+
+Name: res/menu/menu_aacount.xml
+SHA1-Digest: pI54lSf7DjrTdg9kDlzJ6ITEi+U=
+
+Name: res/layout/activity_aacount.xml
+SHA1-Digest: VhA9vcmkOL6+mB8me75oJyb66tI=
+
+Name: res/mipmap-xxhdpi-v4/ic_launcher.png
+SHA1-Digest: TtBU8d63+I+lSLj+Tm5DZvZ5i2c=
+

@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.jcs.orderassistant.R;
 import com.example.jcs.orderassistant.app.OrderApplication;
@@ -24,7 +26,12 @@ public class BanlaceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_banlace);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_header);
+
+        TextView header = (TextView) findViewById(R.id.header_text);
+        header.setText("账目一览");
 
         listView = (ListView) findViewById(R.id.main_lv);
         getMemberInfo();

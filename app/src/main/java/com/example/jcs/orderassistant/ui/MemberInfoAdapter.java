@@ -28,8 +28,8 @@ public class MemberInfoAdapter extends ArrayAdapter<MemberInfo> {
     public View getView(int position, View convertView, ViewGroup parent) {
         MemberInfo info = getItem(position); // 获取当前项的MemberInfo实例
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
-        TextView name = (TextView) view.findViewById(R.id.balance_name);
-        TextView money = (TextView) view.findViewById(R.id.balance_money);
+        final TextView name = (TextView) view.findViewById(R.id.balance_name);
+        final TextView money = (TextView) view.findViewById(R.id.balance_money);
         name.setText(info.getName());
         String mm = Integer.toString(info.getMoney());
         money.setText(mm);

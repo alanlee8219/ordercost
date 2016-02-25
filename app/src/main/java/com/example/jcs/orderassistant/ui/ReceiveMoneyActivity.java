@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.jcs.orderassistant.db.DatabaseHelper;
 import com.example.jcs.orderassistant.db.DatabaseSchema;
@@ -29,7 +31,12 @@ public class ReceiveMoneyActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_receive_money);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_header);
+
+        TextView header = (TextView) findViewById(R.id.header_text);
+        header.setText("入账");
 
         listView = (ListView) findViewById(R.id.member_rm_lv);
         memberList = UiUtility.getMemberInfo();

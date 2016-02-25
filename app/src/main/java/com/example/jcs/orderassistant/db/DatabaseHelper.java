@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String Member_TABLE_CREATE = "create table " + DatabaseSchema.MemberEntry.TABLE_NAME + " ("
             + DatabaseSchema.MemberEntry._ID                      + " integer primary key autoincrement, "
-            + DatabaseSchema.MemberEntry.COLUMN_NAME          + " varchar(255), "
+            + DatabaseSchema.MemberEntry.COLUMN_NAME          + " varchar(255),unique "
             + DatabaseSchema.MemberEntry.COLUMN_MONEY          + " float default 0 "
             + ");";
 

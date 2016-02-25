@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -20,8 +21,6 @@ import com.example.jcs.orderassistant.db.DatabaseSchema;
 import com.example.jcs.orderassistant.db.DatabaseSchema.MemberEntry;
 import com.example.jcs.orderassistant.R;
 import com.example.jcs.orderassistant.app.OrderApplication;
-
-import com.example.jcs.orderassistant.ui.PullableListViewActivity;
 
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -43,7 +42,13 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_main);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_header);
+
+        TextView header = (TextView) findViewById(R.id.header_text);
+        header.setText("订餐小助手");
+
         initRefreshLayout();
 
         Button addMButton = (Button) findViewById(R.id.AddMButton);
@@ -73,12 +78,37 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
             }
         });
 
+        Button banlaceButton = (Button) findViewById(R.id.ListOfAccounts);
+        banlaceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BanlaceActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button rmButton = (Button) findViewById(R.id.RMButton);
+        rmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReceiveMoneyActivity.class);
+                startActivity(intent);
+            }
+        });
+
         listView = (ListView) findViewById(R.id.main_lv);
         getDealInfo();
         DealInfoAdapter adapter = new DealInfoAdapter(MainActivity.this,R.layout.deal_item,dealInfoList);
         listView.setAdapter(adapter);
     }
 
+    protected void onRestart() {
+        super.onRestart();
+        listView = (ListView) findViewById(R.id.main_lv);
+        getDealInfo();
+        DealInfoAdapter adapter = new DealInfoAdapter(MainActivity.this,R.layout.deal_item,dealInfoList);
+        listView.setAdapter(adapter);
+    }
 
     private void getDealInfo()
     {
@@ -90,7 +120,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
         while (cursor.moveToNext()){
             float sum = 0;
             int id = cursor.getInt(0);
-            int date = cursor.getInt(1);
+            long date = cursor.getLong(1);
             String dateStr = UiUtility.GetDateInfo(date);
             int return_money = cursor.getInt(2);
             String dining = cursor.getString(3);
@@ -110,10 +140,12 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
 
     private void initRefreshLayout() {
         mRefreshLayout = (BGARefreshLayout) findViewById(R.id.refreshLayout);
+
+        mRefreshLayout.setPullDownRefreshEnable(false);
         // 为BGARefreshLayout设置代理
         mRefreshLayout.setDelegate(this);
         // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
-        BGARefreshViewHolder refreshViewHolder = new BGANormalRefreshViewHolder(this, true);
+        BGARefreshViewHolder refreshViewHolder = new BGANormalRefreshViewHolder(this, false);
         // 设置下拉刷新和上拉加载更多的风格
         mRefreshLayout.setRefreshViewHolder(refreshViewHolder);
 
@@ -136,6 +168,9 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         // 在这里加载最新数据
+
+        ImageView view = (ImageView) findViewById(R.id.img);
+        view.setVisibility(View.VISIBLE);
 
         /*if (mIsNetworkEnabled) {
             // 如果网络可用，则加载网络数据
@@ -169,6 +204,9 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         // 在这里加载更多数据，或者更具产品需求实现上拉刷新也可以
+
+        ImageView view = (ImageView) findViewById(R.id.img);
+        view.setVisibility(View.GONE);
 
         /*if (mIsNetworkEnabled) {
             // 如果网络可用，则异步加载网络数据，并返回true，显示正在加载更多

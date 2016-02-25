@@ -21,20 +21,31 @@ import java.util.regex.Pattern;
 public class UiUtility {
 
     public static long fortmatDateTime(int year,int month,int day){
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR,year);
         cal.set(Calendar.MONTH,month);
         cal.set(Calendar.DAY_OF_MONTH,day);
         cal.set(Calendar.HOUR_OF_DAY,0);
-        cal.set(Calendar.MINUTE,0);
+        cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         return cal.getTimeInMillis();
     }
 
     public static String GetDateInfo(long millis){
+        String[] weeks = {"星期日","星期一","星期二","星期三","星期四","星期五","星期六"};
+
         Date date=new Date(millis);
         java.text.SimpleDateFormat format=new java.text.SimpleDateFormat("yyyy-MM-dd");
-        return format.format(date);
+        String dateinfo = format.format(date);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(millis);
+        int week_index = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if(week_index<0){
+            week_index = 0;
+        }
+        dateinfo += " " + weeks[week_index];
+        return dateinfo;
     }
 
     public static boolean isInteger(String str) {

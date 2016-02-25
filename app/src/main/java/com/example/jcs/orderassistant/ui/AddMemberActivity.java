@@ -5,8 +5,10 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jcs.orderassistant.db.DatabaseHelper;
@@ -25,7 +27,13 @@ public class AddMemberActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_add_member);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_header);
+
+        TextView header = (TextView) findViewById(R.id.header_text);
+        header.setText("增加成员");
+
         Button button = (Button) findViewById(R.id.addM_save);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

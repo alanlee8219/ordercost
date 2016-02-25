@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -61,13 +62,17 @@ public class AACountActivity extends Activity {
             }
         });
 
-        Button return_button = (Button) findViewById(R.id.header_return);
+        TextView header = (TextView) findViewById(R.id.header_text);
+        header.setText("AA记账");
+
+
+        /*Button return_button = (Button) findViewById(R.id.header_return);
         return_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
 
         Calendar calendar1 = Calendar.getInstance();
         AACountActivity.year = calendar1.get(Calendar.YEAR);

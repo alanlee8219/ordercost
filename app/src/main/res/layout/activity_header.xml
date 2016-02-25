@@ -5,37 +5,14 @@
     android:layout_height="fill_parent"
     android:background="#ed4255">
 
-
-    <Button  android:id="@+id/header_return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
-        android:layout_centerVertical="true"
-        android:text="返回"
-        android:textColor="#FFFFFF"/>
-
     <TextView android:id="@+id/header_text"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_toRightOf="@+id/header_return"
-        android:layout_toLeftOf="@+id/header_commit"
         android:text="My Title Bar"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:singleLine="true" />
-
-    <Button  android:id="@+id/header_commit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
-        android:layout_centerVertical="true"
-        android:text="提交"
-        android:textColor="#FFFFFF"/>
 
 </RelativeLayout>
