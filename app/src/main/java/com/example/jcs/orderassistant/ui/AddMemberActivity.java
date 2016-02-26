@@ -54,13 +54,14 @@ public class AddMemberActivity extends Activity {
             Toast.makeText(AddMemberActivity.this,"请输入姓名",Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (money.isEmpty()) {
-            Toast.makeText(AddMemberActivity.this,"请输入金额",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (!UiUtility.isInteger(money)){
-            Toast.makeText(AddMemberActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
-            return;
+            money = "0";
+        }else{
+            if (!UiUtility.isInteger(money)){
+                Toast.makeText(AddMemberActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
         SQLiteDatabase db = dbHelper.getWritableDatabase();

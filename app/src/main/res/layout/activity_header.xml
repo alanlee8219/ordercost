@@ -10,6 +10,7 @@
         android:layout_height="fill_parent"
         android:text="My Title Bar"
         android:textColor="#FFFFFF"
+        android:textSize="36px"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"

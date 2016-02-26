@@ -34,7 +34,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/input"/>
+                android:inputType="numberDecimal"
+                android:hint="0"
+                android:numeric="integer"/>
         </LinearLayout>
 
         <LinearLayout
@@ -53,12 +55,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/input"/>
+                android:hint="@string/input"/>
         </LinearLayout>
 
         <Button
             android:id="@+id/SepDateButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             ></Button>

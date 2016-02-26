@@ -101,9 +101,14 @@ public class SepcountActivity extends Activity {
         EditText dinning = (EditText) findViewById(R.id.sep_dinning);
         String d = dinning.getText().toString();
 
+        if (c.isEmpty()) c="0";
         if (!UiUtility.isInteger(c)){
             Toast.makeText(SepcountActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
             return;
+        }
+
+        if (d.isEmpty()) {
+            d = "未知商家";
         }
 
         //加订单

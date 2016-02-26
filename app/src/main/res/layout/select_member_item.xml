@@ -7,6 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
+        android:gravity="center_vertical"
         android:drawableLeft="?android:attr/listChoiceIndicatorMultiple"/>
 
 </LinearLayout>

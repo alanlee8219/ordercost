@@ -115,7 +115,8 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
         dealInfoList.clear();
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String query = "select * from " + DatabaseSchema.OrderEntry.TABLE_NAME;
+        String query = "select * from " + DatabaseSchema.OrderEntry.TABLE_NAME
+                + " order by " + DatabaseSchema.OrderEntry.COLUMN_DATE +" desc";
         Cursor cursor = db.rawQuery(query,null);
         while (cursor.moveToNext()){
             float sum = 0;

@@ -117,13 +117,22 @@ public class AACountActivity extends Activity {
         EditText cashback = (EditText) findViewById(R.id.aa_return);
         String c = cashback.getText().toString();
 
-        if (s.isEmpty() || c.isEmpty()) {
-            Toast.makeText(AACountActivity.this, "请输入金额", Toast.LENGTH_SHORT).show();
+        if (s.isEmpty()) {
+            Toast.makeText(AACountActivity.this, "请输入总金额", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if (c.isEmpty()) {
+            c = "0";
+        }
+
         if ((!UiUtility.isInteger(s)) || !UiUtility.isInteger(c)){
             Toast.makeText(AACountActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
             return;
+        }
+
+        if (d.isEmpty()) {
+            d = "未知商家";
         }
 
         //加订单
