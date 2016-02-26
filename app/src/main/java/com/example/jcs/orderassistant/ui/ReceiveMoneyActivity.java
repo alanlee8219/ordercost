@@ -20,6 +20,7 @@ import com.example.jcs.orderassistant.app.OrderApplication;
 import com.example.jcs.orderassistant.ui.UiUtility;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -59,15 +60,20 @@ public class ReceiveMoneyActivity extends Activity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        MemberWithMAdapter adapter = (MemberWithMAdapter)listView.getAdapter();
+        //MemberWithMAdapter adapter = (MemberWithMAdapter)listView.getAdapter();
 
-        for (int i=0;i<adapter.isSelected.size() ;i++)
+        //for (int i=0;i<adapter.isSelected.size() ;i++)
+        //{
+        //    if (adapter.isSelected.get(i) == true ){
+        for (int i=0;i<memberList.size() ;i++)
         {
-            if (adapter.isSelected.get(i) == true ){
+            if (memberList.get(i).getSelected() == true ){
                 View view = listView.getChildAt(i);
                 EditText editText = (EditText) view.findViewById(R.id.sep_money);
                 String sep_money = editText.getText().toString();
                 int sep = Integer.parseInt(sep_money);
+
+                if (sep == 0) continue;
 
                 values.clear();
                 values.put(DatabaseSchema.MemberEntry.COLUMN_MONEY, memberList.get(i).getSum() + sep);
@@ -75,6 +81,13 @@ public class ReceiveMoneyActivity extends Activity {
                 String[] arry = new String[1];
                 arry[0] = Integer.toString(memberList.get(i).getId());
                 db.update(DatabaseSchema.MemberEntry.TABLE_NAME, values, idquery, arry);
+
+                values.clear();
+                values.put(DatabaseSchema.AdvanceEntry.COLUMN_MEMEBER_ID, memberList.get(i).getId());
+                values.put(DatabaseSchema.AdvanceEntry.COLUMN_MONEY, sep);
+                Calendar cal = Calendar.getInstance();
+                values.put(DatabaseSchema.AdvanceEntry.COLUMN_DATE, cal.getTimeInMillis());
+                db.insert(DatabaseSchema.AdvanceEntry.TABLE_NAME, null, values);
 
             } else {
                 ;

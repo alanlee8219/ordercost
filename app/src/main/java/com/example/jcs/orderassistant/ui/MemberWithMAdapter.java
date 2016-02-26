@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jcs.orderassistant.R;
 
@@ -16,53 +17,72 @@ import java.util.List;
 /**
  * Created by JCS on 2015/10/10.
  */
+
 public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
 
     private int resourceId;
 
+    private  class ViewHolder
+    {
+        private  CheckedTextView myCheckText;
+        private  EditText mEditText;
+    };
+
+
     private List<MemberInfoWithId> list;
-    public static HashMap<Integer, Boolean> isSelected;
+    private LayoutInflater mInflater;
 
     public MemberWithMAdapter(Context context, int textViewResourceId,
                          List<MemberInfoWithId> objects) {
         super(context, textViewResourceId, objects);
         list = objects;
         resourceId = textViewResourceId;
-        init();
+        this.mInflater = LayoutInflater.from(context);
     }
 
-
-    // 初始化 设置所有checkbox都为未选择
-    public void init() {
-        isSelected = new HashMap<Integer, Boolean>();
-        for (int i = 0; i < list.size(); i++) {
-            isSelected.put(i, false);
-        }
-    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int itemId = position;
-        MemberInfoWithId info = getItem(position); // 获取当前项的Member实例
-        View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
-        final CheckedTextView name = (CheckedTextView) view.findViewById(R.id.select_member_withm);
-        name.setText(info.getName());
-        name.setChecked(false);
-        name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name.toggle();
-                if (isSelected.put(itemId, false)) {
-                    isSelected.put(itemId, false);
-                } else {
-                    isSelected.put(itemId, true);
+        ViewHolder holder = null;
+        final MemberInfoWithId info = getItem(position); // 获取当前项的Member实例
+
+        if (convertView == null){
+            holder = new ViewHolder();
+            convertView = mInflater.inflate(R.layout.select_member_withm_item, null);
+            holder.myCheckText = (CheckedTextView)convertView.findViewById(R.id.select_member_withm);
+            holder.mEditText = (EditText)convertView.findViewById(R.id.sep_money);
+
+            final ViewHolder finalViewHolder = holder;
+            finalViewHolder.myCheckText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finalViewHolder.myCheckText.toggle();
+                    if (info.getSelected() == true) {
+                        info.setSelected(false);
+                    } else{
+                        info.setSelected(true);
+                    }
                 }
-            }
-        });
-        name.setChecked(isSelected.get(position));
+            });
+            finalViewHolder.mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(hasFocus == false){
+                        EditText edit = (EditText)v.findViewById(R.id.sep_money);
+                        String each = edit.getText().toString();
+                        info.setEach(Integer.valueOf(each));
+                    }
+                }
+            });
+            convertView.setTag(holder);
+        }else{
+            holder = (ViewHolder)convertView.getTag();
+        }
 
-        final EditText edit = (EditText) view.findViewById(R.id.sep_money);
+        holder.mEditText.setText(Integer.toString(info.getEach()));
+        holder.myCheckText.setChecked(info.getSelected());
+        holder.myCheckText.setText(info.getName());
 
-        return view;
+        return convertView;
     }
 }

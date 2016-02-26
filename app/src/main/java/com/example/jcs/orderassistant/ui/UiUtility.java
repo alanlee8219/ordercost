@@ -58,8 +58,8 @@ public class UiUtility {
 
     public static String getMoneyStr(float money)
     {
-        BigDecimal dec = new BigDecimal(money);
-        dec.setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal dec = new BigDecimal((double)money);
+        dec = dec.setScale(2,BigDecimal.ROUND_HALF_UP);
         return dec.toString();
     }
 

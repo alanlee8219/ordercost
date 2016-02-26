@@ -126,20 +126,32 @@ public class SepcountActivity extends Activity {
 
         //加子订单
         int count = 0;
-        MemberWithMAdapter adapter = (MemberWithMAdapter)listView.getAdapter();
+
+        for (int i=0;i<memberList.size() ;i++) {
+            if (memberList.get(i).getSelected() == true) {
+                count++;
+            }
+        }
+        /*MemberWithMAdapter adapter = (MemberWithMAdapter)listView.getAdapter();
         for (int i=0;i<adapter.isSelected.size() ;i++) {
             if (adapter.isSelected.get(i) == true ) count++;
-        }
+        }*/
 
         float return_each = m/count;
 
-        for (int i=0;i<adapter.isSelected.size() ;i++)
+       /* for (int i=0;i<adapter.isSelected.size() ;i++)
         {
-            if (adapter.isSelected.get(i) == true ){
-                View view = listView.getChildAt(i);
+            if (adapter.isSelected.get(i) == true ){*/
+
+        for (int i=0;i<memberList.size() ;i++)
+        {
+            if (memberList.get(i).getSelected() == true ){
+
+                /*View view = listView.getChildAt(i);
                 EditText editText = (EditText) view.findViewById(R.id.sep_money);
                 String sep_money = editText.getText().toString();
-                float sep = Integer.parseInt(sep_money) - return_each;
+                float sep = Integer.parseInt(sep_money) - return_each;*/
+                float sep = memberList.get(i).getEach() - return_each;
 
                 //加子订单
                 values.clear();

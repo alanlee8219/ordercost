@@ -125,7 +125,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String query = "select * from " + DatabaseSchema.OrderEntry.TABLE_NAME
-                + " order by " + DatabaseSchema.OrderEntry.COLUMN_DATE +" desc";
+                + " order by " + DatabaseSchema.OrderEntry._ID +" desc";
         Cursor cursor = db.rawQuery(query,null);
         while (cursor.moveToNext()){
             String detail ="";
@@ -155,7 +155,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                 }
 
                 detail +=memberName;
-                detail += " "+ Integer.toString((int)each);
+                detail += " "+ UiUtility.getMoneyStr(each) + " ";
             }
 
             DealInfo info = new DealInfo(dining,dateStr,(int)sum,detail);
