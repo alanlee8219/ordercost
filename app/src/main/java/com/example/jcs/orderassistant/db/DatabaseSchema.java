@@ -50,4 +50,15 @@ public class DatabaseSchema {
         public static final String COLUMN_MONEY = "money";
     };
 
+    public static abstract class AdvanceEntry implements BaseColumns {
+
+        public static final String TABLE_NAME = "advance";
+
+        public static final String COLUMN_MEMEBER_ID = "member_id";
+
+        public static final String COLUMN_DATE = "order_date";
+
+        public static final String COLUMN_MONEY = "money";
+    };
+
 }

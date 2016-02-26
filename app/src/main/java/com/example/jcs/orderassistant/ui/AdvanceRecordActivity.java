@@ -18,7 +18,7 @@ import com.example.jcs.orderassistant.db.DatabaseSchema;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BanlaceActivity extends Activity {
+public class AdvanceRecordActivity extends Activity {
 
     private ListView listView = null;
     private List<MemberInfo> memberList = new ArrayList<MemberInfo>();
@@ -31,11 +31,11 @@ public class BanlaceActivity extends Activity {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_header);
 
         TextView header = (TextView) findViewById(R.id.header_text);
-        header.setText("账目一览");
+        header.setText("入账记录一览");
 
         listView = (ListView) findViewById(R.id.main_lv);
         getMemberInfo();
-        MemberInfoAdapter adapter = new MemberInfoAdapter(BanlaceActivity.this,R.layout.balance_item,memberList);
+        MemberInfoAdapter adapter = new MemberInfoAdapter(AdvanceRecordActivity.this,R.layout.balance_item,memberList);
         listView.setAdapter(adapter);
     }
 
@@ -44,23 +44,31 @@ public class BanlaceActivity extends Activity {
         memberList.clear();
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String query = "select * from " + DatabaseSchema.MemberEntry.TABLE_NAME;
+        String query = "select * from " + DatabaseSchema.AdvanceEntry.TABLE_NAME
+                + " order by " + DatabaseSchema.AdvanceEntry.COLUMN_DATE +" desc";
+
         Cursor cursor = db.rawQuery(query,null);
-        int sum=0;
         while (cursor.moveToNext()){
-            sum+=cursor.getInt(2);
-            MemberInfo info = new MemberInfo(cursor.getString(1),cursor.getInt(2));
+            String sub_query = "select " + DatabaseSchema.MemberEntry.COLUMN_NAME
+                    +" from " + DatabaseSchema.MemberEntry.TABLE_NAME
+                    + " where " + DatabaseSchema.MemberEntry._ID +" = "
+                    + cursor.getInt(1);
+            Cursor subcursor = db.rawQuery(sub_query,null);
+            String memberName="";
+            while (subcursor.moveToNext()) {
+                memberName =subcursor.getString(0);
+            }
+            String date = UiUtility.GetDateInfo(cursor.getLong(2));
+            date += " " + memberName;
+            MemberInfo info = new MemberInfo(date,cursor.getInt(3));
             memberList.add(info);
         }
-
-        MemberInfo info = new MemberInfo("总金额",sum);
-        memberList.add(info);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_banlace, menu);
+        getMenuInflater().inflate(R.menu.menu_advance_record, menu);
         return true;
     }
 

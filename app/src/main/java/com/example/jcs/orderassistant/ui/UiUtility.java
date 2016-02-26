@@ -7,6 +7,7 @@ import com.example.jcs.orderassistant.app.OrderApplication;
 import com.example.jcs.orderassistant.db.DatabaseHelper;
 import com.example.jcs.orderassistant.db.DatabaseSchema;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,6 +49,20 @@ public class UiUtility {
         return dateinfo;
     }
 
+    public static float getMoneyfloat(float money)
+    {
+        BigDecimal dec = new BigDecimal(money);
+        dec.setScale(2,BigDecimal.ROUND_HALF_UP);
+        return dec.floatValue();
+    }
+
+    public static String getMoneyStr(float money)
+    {
+        BigDecimal dec = new BigDecimal(money);
+        dec.setScale(2,BigDecimal.ROUND_HALF_UP);
+        return dec.toString();
+    }
+
     public static boolean isInteger(String str) {
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
@@ -58,7 +73,8 @@ public class UiUtility {
         List<MemberInfoWithId> memberList = new ArrayList<MemberInfoWithId>();
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String query = "select * from " + DatabaseSchema.MemberEntry.TABLE_NAME;
+        String query = "select * from " + DatabaseSchema.MemberEntry.TABLE_NAME
+                + " order by " + DatabaseSchema.MemberEntry._ID ;
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()){
             MemberInfoWithId info = new MemberInfoWithId(cursor.getInt(0),cursor.getString(1),cursor.getFloat(2));

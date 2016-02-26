@@ -36,6 +36,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "UNIQUE(" + DatabaseSchema.MemberEntry.COLUMN_NAME + ")"
             + ");";
 
+    private static final String ADVANCE_TABLE_CREATE = "create table " + DatabaseSchema.AdvanceEntry.TABLE_NAME + " ("
+            + DatabaseSchema.AdvanceEntry._ID                      + " integer primary key autoincrement, "
+            + DatabaseSchema.AdvanceEntry.COLUMN_MEMEBER_ID          + " integer default 0, "
+            + DatabaseSchema.AdvanceEntry.COLUMN_DATE                + " integer default 0, "
+            + DatabaseSchema.AdvanceEntry.COLUMN_MONEY          + " float default 0, "
+            + "FOREIGN KEY (" 	+ DatabaseSchema.AdvanceEntry.COLUMN_MEMEBER_ID + ") REFERENCES "
+            + DatabaseSchema.MemberEntry.TABLE_NAME + " (" + DatabaseSchema.MemberEntry._ID + ") ON DELETE SET NULL "
+            + ");";
+
     /**
      * Constructor
      * @param context Application context
@@ -64,6 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(Order_TABLE_CREATE);
         db.execSQL(SubOrder_TABLE_CREATE);
         db.execSQL(Member_TABLE_CREATE);
+        db.execSQL(ADVANCE_TABLE_CREATE);
     }
 
     /*private void insertDefaultMember(SQLiteDatabase db) {

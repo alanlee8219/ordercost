@@ -96,6 +96,15 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
             }
         });
 
+        Button adButton = (Button) findViewById(R.id.RecButton);
+        adButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AdvanceRecordActivity.class);
+                startActivity(intent);
+            }
+        });
+
         listView = (ListView) findViewById(R.id.main_lv);
         getDealInfo();
         DealInfoAdapter adapter = new DealInfoAdapter(MainActivity.this,R.layout.deal_item,dealInfoList);
@@ -119,22 +128,37 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                 + " order by " + DatabaseSchema.OrderEntry.COLUMN_DATE +" desc";
         Cursor cursor = db.rawQuery(query,null);
         while (cursor.moveToNext()){
+            String detail ="";
             float sum = 0;
             int id = cursor.getInt(0);
             long date = cursor.getLong(1);
             String dateStr = UiUtility.GetDateInfo(date);
             int return_money = cursor.getInt(2);
             String dining = cursor.getString(3);
-            String sub_query = "select " + DatabaseSchema.SubOrderEntry.COLUMN_SUM
+            String sub_query = "select " + " * "
                     +" from " + DatabaseSchema.SubOrderEntry.TABLE_NAME
                     + " where " + DatabaseSchema.SubOrderEntry.COLUMN_ORDERID +" = "
                     + Integer.toString(id);
             Cursor subcursor = db.rawQuery(sub_query,null);
             while (subcursor.moveToNext()) {
-                sum+=subcursor.getFloat(0);
+                float each = subcursor.getFloat(2);
+                sum+=subcursor.getFloat(2);
+
+                String member_query = "select " + DatabaseSchema.MemberEntry.COLUMN_NAME
+                        +" from " + DatabaseSchema.MemberEntry.TABLE_NAME
+                        + " where " + DatabaseSchema.MemberEntry._ID +" = "
+                        + subcursor.getInt(3);
+                Cursor member_cursor = db.rawQuery(member_query,null);
+                String memberName="";
+                while (member_cursor.moveToNext()) {
+                    memberName =member_cursor.getString(0);
+                }
+
+                detail +=memberName;
+                detail += " "+ Integer.toString((int)each);
             }
 
-            DealInfo info = new DealInfo(dining,dateStr,(int)sum);
+            DealInfo info = new DealInfo(dining,dateStr,(int)sum,detail);
             dealInfoList.add(info);
         }
     }

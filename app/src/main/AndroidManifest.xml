@@ -38,6 +38,10 @@
             android:name=".ui.BanlaceActivity"
             android:label="@string/title_activity_banlace" >
         </activity>
+        <activity
+            android:name=".ui.AdvanceRecordActivity"
+            android:label="@string/title_activity_advance_record" >
+        </activity>
     </application>
 
 </manifest>

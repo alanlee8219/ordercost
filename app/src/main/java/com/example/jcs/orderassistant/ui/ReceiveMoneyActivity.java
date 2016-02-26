@@ -59,10 +59,12 @@ public class ReceiveMoneyActivity extends Activity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        for (int i=0;i<listView.getChildCount();i++) {
-            View view = listView.getChildAt(i);
-            CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.select_member_withm);
-            if (ctv.isChecked()) {
+        MemberWithMAdapter adapter = (MemberWithMAdapter)listView.getAdapter();
+
+        for (int i=0;i<adapter.isSelected.size() ;i++)
+        {
+            if (adapter.isSelected.get(i) == true ){
+                View view = listView.getChildAt(i);
                 EditText editText = (EditText) view.findViewById(R.id.sep_money);
                 String sep_money = editText.getText().toString();
                 int sep = Integer.parseInt(sep_money);

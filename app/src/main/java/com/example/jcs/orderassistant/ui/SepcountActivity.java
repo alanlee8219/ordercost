@@ -126,24 +126,20 @@ public class SepcountActivity extends Activity {
 
         //加子订单
         int count = 0;
-        for (int i=0;i<listView.getChildCount();i++)
-        {
-            View view = listView.getChildAt(i);
-            CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.select_member_withm);
-            if (ctv.isChecked()) {
-                count++;
-            }
+        MemberWithMAdapter adapter = (MemberWithMAdapter)listView.getAdapter();
+        for (int i=0;i<adapter.isSelected.size() ;i++) {
+            if (adapter.isSelected.get(i) == true ) count++;
         }
+
         float return_each = m/count;
 
-        for (int i=0;i<listView.getChildCount();i++)
+        for (int i=0;i<adapter.isSelected.size() ;i++)
         {
-            View view = listView.getChildAt(i);
-            CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.select_member_withm);
-            if (ctv.isChecked()) {
+            if (adapter.isSelected.get(i) == true ){
+                View view = listView.getChildAt(i);
                 EditText editText = (EditText) view.findViewById(R.id.sep_money);
                 String sep_money = editText.getText().toString();
-                int sep = Integer.parseInt(sep_money);
+                float sep = Integer.parseInt(sep_money) - return_each;
 
                 //加子订单
                 values.clear();
@@ -153,7 +149,7 @@ public class SepcountActivity extends Activity {
                 db.insert(DatabaseSchema.SubOrderEntry.TABLE_NAME, null, values);
                 //设置余额
                 values.clear();
-                values.put(DatabaseSchema.MemberEntry.COLUMN_MONEY, memberList.get(i).getSum()-sep-return_each);
+                values.put(DatabaseSchema.MemberEntry.COLUMN_MONEY, memberList.get(i).getSum()-sep);
                 String idquery = ""+ DatabaseSchema.MemberEntry._ID + "= ?";
                 String[] arry = new String[1];
                 arry[0] = Integer.toString(memberList.get(i).getId());

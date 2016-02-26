@@ -9,6 +9,7 @@
     <string name="balance">余额一览</string>
     <string name="receive_money">入账</string>
     <string name="find_money">查账</string>
+    <string name="advance_record">入账记录</string>
 
     <string name="title_activity_aacount">AACountActivity</string>
     <string name="select_member">选择成员</string>
@@ -39,6 +40,7 @@
     <string name="text_forward">增加</string>
     <string name="text_back">返回</string>
     <string name="title_activity_banlace">BanlaceActivity</string>
+    <string name="title_activity_advance_record">AdvanceRecordActivity</string>
 
 
 </resources>

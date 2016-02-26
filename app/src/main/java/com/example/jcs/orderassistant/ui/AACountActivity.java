@@ -158,22 +158,19 @@ public class AACountActivity extends Activity {
         int sum_money = Integer.parseInt(s);
 
         int count = 0;
-        for (int i=0;i<listView.getChildCount();i++)
-        {
-            View view = listView.getChildAt(i);
-            CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.select_member);
-            if (ctv.isChecked()) {
-                count++;
-            }
+        MemberAdapter adapter = (MemberAdapter)listView.getAdapter();
+        for (int i=0;i<adapter.isSelected.size() ;i++) {
+            if (adapter.isSelected.get(i) == true ) count++;
         }
-        float each = (float)sum_money/count;
-        float return_each = (float)m/count;
 
-        for (int i=0;i<listView.getChildCount();i++)
+        float each = (float)(sum_money-m)/count;
+
+
+//        float return_each = (float)m/count;
+
+        for (int i=0;i<adapter.isSelected.size() ;i++)
         {
-            View view = listView.getChildAt(i);
-            CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.select_member);
-            if (ctv.isChecked()) {
+            if (adapter.isSelected.get(i) == true ){
                 //加子订单
                 values.clear();
                 values.put(SubOrderEntry.COLUMN_ORDERID, ordid);
@@ -182,7 +179,8 @@ public class AACountActivity extends Activity {
                 db.insert(SubOrderEntry.TABLE_NAME, null, values);
                 //设置余额
                 values.clear();
-                values.put(MemberEntry.COLUMN_MONEY, memberList.get(i).getSum()-each+return_each);
+                //values.put(MemberEntry.COLUMN_MONEY, memberList.get(i).getSum()-each+return_each);
+                values.put(MemberEntry.COLUMN_MONEY, memberList.get(i).getSum()-each);
                 String idquery = ""+ MemberEntry._ID + "= ?";
                 String[] arry = new String[1];
                 arry[0] = Integer.toString(memberList.get(i).getId());
