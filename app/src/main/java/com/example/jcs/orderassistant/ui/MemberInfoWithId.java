@@ -10,14 +10,14 @@ public class MemberInfoWithId {
     private float sum;
 
     private boolean selected;
-    private int each;
+    private float each;
 
     public MemberInfoWithId(int id,String name,float sum){
         this.name = name;
         this.id = id;
         this.sum = sum;
         selected = false;
-        each = 0;
+        each = 0.0f;
     }
 
     public String getName() {
@@ -42,12 +42,12 @@ public class MemberInfoWithId {
         return selected;
     }
 
-    public void setEach(int each)
+    public void setEach(float each)
     {
         this.each = each;
     }
 
-    public int getEach()
+    public float getEach()
     {
         return each;
     }

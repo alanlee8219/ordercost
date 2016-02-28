@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:inputType="numberDecimal"
-        android:hint="0"
-        android:numeric="integer"/>
+        android:hint="0" />
 
 </LinearLayout>

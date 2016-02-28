@@ -6,18 +6,18 @@ package com.example.jcs.orderassistant.ui;
 public class MemberInfo {
 
     private String name;
-    private int money;
+    private float money;
 
-    public MemberInfo(String name,int money){
+    public MemberInfo(String name,float money){
         this.name = name;
-        this.money = money;
+        this.money = UiUtility.getMoneyfloat(money);
     }
 
     public String getName() {
         return name;
     }
 
-    public int getMoney(){
+    public float getMoney(){
         return money;
     }
 }
