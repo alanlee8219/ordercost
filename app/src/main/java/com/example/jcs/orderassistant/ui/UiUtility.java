@@ -36,7 +36,7 @@ public class UiUtility {
         String[] weeks = {"星期日","星期一","星期二","星期三","星期四","星期五","星期六"};
 
         Date date=new Date(millis);
-        java.text.SimpleDateFormat format=new java.text.SimpleDateFormat("yyyy-MM-dd");
+        java.text.SimpleDateFormat format=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateinfo = format.format(date);
 
         Calendar cal = Calendar.getInstance();
@@ -52,7 +52,7 @@ public class UiUtility {
     public static float getMoneyfloat(float money)
     {
         BigDecimal dec = new BigDecimal(money);
-        dec.setScale(2,BigDecimal.ROUND_HALF_UP);
+        dec = dec.setScale(2,BigDecimal.ROUND_HALF_UP);
         return dec.floatValue();
     }
 
