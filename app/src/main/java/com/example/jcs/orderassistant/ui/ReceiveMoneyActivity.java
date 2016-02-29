@@ -68,11 +68,7 @@ public class ReceiveMoneyActivity extends Activity {
         for (int i=0;i<memberList.size() ;i++)
         {
             if (memberList.get(i).getSelected() == true ){
-                View view = listView.getChildAt(i);
-                EditText editText = (EditText) view.findViewById(R.id.sep_money);
-                String sep_money = editText.getText().toString();
-                if(sep_money.isEmpty()) continue;
-                Float sep = Float.parseFloat(sep_money);
+                Float sep = memberList.get(i).getEach();
                 if (sep.compareTo(0.0f) == 0) continue;
 
                 values.clear();

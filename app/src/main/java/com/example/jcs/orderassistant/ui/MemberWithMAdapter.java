@@ -42,9 +42,9 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        final MemberInfoWithId info = getItem(position); // 获取当前项的Member实例
+        MemberInfoWithId info = getItem(position); // 获取当前项的Member实例
 
         if (convertView == null){
             holder = new ViewHolder();
@@ -57,6 +57,7 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
                 @Override
                 public void onClick(View v) {
                     finalViewHolder.myCheckText.toggle();
+                    MemberInfoWithId info = (MemberInfoWithId) finalViewHolder.myCheckText.getTag();
                     if (info.getSelected() == true) {
                         info.setSelected(false);
                     } else {
@@ -64,31 +65,38 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
                     }
                 }
             });
-            holder.mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus == false) {
-                        EditText edit = (EditText) v.findViewById(R.id.sep_money);
-                        String each = edit.getText().toString();
-                        if (!each.isEmpty()) {
-                            info.setEach(Float.valueOf(each));
-                            //info.setEach(Integer.valueOf(each));
-                        }
-                    }
-                }
-            });
+
             convertView.setTag(holder);
+            holder.myCheckText.setTag(info);
+            holder.mEditText.setTag(info);
 
         }else{
             holder = (ViewHolder)convertView.getTag();
+            holder.myCheckText.setTag(info);
+            holder.mEditText.setTag(info);
         }
 
-        Float data = Float.valueOf(info.getEach());
-        if (data.compareTo(0.0f) == 0) {
-            holder.mEditText.setHint(Float.toString(info.getEach()));
-        } else {
-            holder.mEditText.setText(Float.toString(info.getEach()));
-        }
+
+        holder.mEditText.setText(Float.toString(list.get(position).getEach()));
+
+        holder.mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == false) {
+                    //final int p1 = v.getId();
+                    //MemberInfoWithId info = (MemberInfoWithId) finalViewHolder.mEditText.getTag();
+                    MemberInfoWithId info = list.get(position);
+                    //EditText edit = (EditText) v.findViewById(R.id.sep_money);
+                    EditText edit = (EditText) v;
+                    String each = edit.getText().toString();
+                    if (!each.isEmpty()) {
+                        info.setEach(Float.valueOf(each));
+                        //info.setEach(Integer.valueOf(each));
+                    }
+                }
+            }
+        });
+
        // holder.mEditText.setText(Integer.toString(info.getEach()));
         holder.myCheckText.setChecked(info.getSelected());
         holder.myCheckText.setText(info.getName());

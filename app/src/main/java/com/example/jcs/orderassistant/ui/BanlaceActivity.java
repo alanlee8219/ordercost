@@ -46,7 +46,7 @@ public class BanlaceActivity extends Activity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String query = "select * from " + DatabaseSchema.MemberEntry.TABLE_NAME;
         Cursor cursor = db.rawQuery(query,null);
-        int sum=0;
+        float sum=0;
         while (cursor.moveToNext()){
             sum+=cursor.getFloat(2);
             MemberInfo info = new MemberInfo(cursor.getString(1),cursor.getFloat(2));

@@ -36,7 +36,7 @@ public class UiUtility {
         String[] weeks = {"星期日","星期一","星期二","星期三","星期四","星期五","星期六"};
 
         Date date=new Date(millis);
-        java.text.SimpleDateFormat format=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.text.SimpleDateFormat format=new java.text.SimpleDateFormat("yyyy-MM-dd HH");
         String dateinfo = format.format(date);
 
         Calendar cal = Calendar.getInstance();
