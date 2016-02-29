@@ -76,8 +76,9 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
             holder.mEditText.setTag(info);
         }
 
-
-        holder.mEditText.setText(Float.toString(list.get(position).getEach()));
+        if(Float.compare(list.get(position).getEach(),0.0f) != 0 ) {
+            holder.mEditText.setText(Float.toString(list.get(position).getEach()));
+        }
 
         holder.mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
