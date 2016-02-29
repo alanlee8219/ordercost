@@ -71,12 +71,12 @@ public class ReceiveMoneyActivity extends Activity {
                 View view = listView.getChildAt(i);
                 EditText editText = (EditText) view.findViewById(R.id.sep_money);
                 String sep_money = editText.getText().toString();
-                if(sep_money.isEmpty()) continue;
-                Float sep = Float.parseFloat(sep_money);
-                if (sep.compareTo(0.0f) == 0) continue;
+                int sep = Integer.parseInt(sep_money);
+
+                if (sep == 0) continue;
 
                 values.clear();
-                values.put(DatabaseSchema.MemberEntry.COLUMN_MONEY, memberList.get(i).getSum() + sep.floatValue());
+                values.put(DatabaseSchema.MemberEntry.COLUMN_MONEY, memberList.get(i).getSum() + sep);
                 String idquery = "" + DatabaseSchema.MemberEntry._ID + "= ?";
                 String[] arry = new String[1];
                 arry[0] = Integer.toString(memberList.get(i).getId());

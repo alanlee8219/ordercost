@@ -48,8 +48,8 @@ public class BanlaceActivity extends Activity {
         Cursor cursor = db.rawQuery(query,null);
         int sum=0;
         while (cursor.moveToNext()){
-            sum+=cursor.getFloat(2);
-            MemberInfo info = new MemberInfo(cursor.getString(1),cursor.getFloat(2));
+            sum+=cursor.getInt(2);
+            MemberInfo info = new MemberInfo(cursor.getString(1),cursor.getInt(2));
             memberList.add(info);
         }
 

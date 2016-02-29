@@ -31,7 +31,7 @@ public class MemberInfoAdapter extends ArrayAdapter<MemberInfo> {
         final TextView name = (TextView) view.findViewById(R.id.balance_name);
         final TextView money = (TextView) view.findViewById(R.id.balance_money);
         name.setText(info.getName());
-        String mm = Float.toString(info.getMoney());
+        String mm = Integer.toString(info.getMoney());
         money.setText(mm);
         return view;
     }
