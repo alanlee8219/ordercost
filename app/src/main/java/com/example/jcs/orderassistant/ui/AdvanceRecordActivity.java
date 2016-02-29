@@ -60,7 +60,7 @@ public class AdvanceRecordActivity extends Activity {
             }
             String date = UiUtility.GetDateInfo(cursor.getLong(2));
             date += " " + memberName;
-            MemberInfo info = new MemberInfo(date,cursor.getFloat(3));
+            MemberInfo info = new MemberInfo(date,cursor.getInt(3));
             memberList.add(info);
         }
     }

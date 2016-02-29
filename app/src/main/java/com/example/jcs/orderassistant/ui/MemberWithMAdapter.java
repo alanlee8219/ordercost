@@ -53,43 +53,33 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
             holder.mEditText = (EditText)convertView.findViewById(R.id.sep_money);
 
             final ViewHolder finalViewHolder = holder;
-            holder.myCheckText.setOnClickListener(new View.OnClickListener() {
+            finalViewHolder.myCheckText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     finalViewHolder.myCheckText.toggle();
                     if (info.getSelected() == true) {
                         info.setSelected(false);
-                    } else {
+                    } else{
                         info.setSelected(true);
                     }
                 }
             });
-            holder.mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            finalViewHolder.mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus == false) {
-                        EditText edit = (EditText) v.findViewById(R.id.sep_money);
+                    if(hasFocus == false){
+                        EditText edit = (EditText)v.findViewById(R.id.sep_money);
                         String each = edit.getText().toString();
-                        if (!each.isEmpty()) {
-                            info.setEach(Float.valueOf(each));
-                            //info.setEach(Integer.valueOf(each));
-                        }
+                        info.setEach(Integer.valueOf(each));
                     }
                 }
             });
             convertView.setTag(holder);
-
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
 
-        Float data = Float.valueOf(info.getEach());
-        if (data.compareTo(0.0f) == 0) {
-            holder.mEditText.setHint(Float.toString(info.getEach()));
-        } else {
-            holder.mEditText.setText(Float.toString(info.getEach()));
-        }
-       // holder.mEditText.setText(Integer.toString(info.getEach()));
+        holder.mEditText.setText(Integer.toString(info.getEach()));
         holder.myCheckText.setChecked(info.getSelected());
         holder.myCheckText.setText(info.getName());
 
