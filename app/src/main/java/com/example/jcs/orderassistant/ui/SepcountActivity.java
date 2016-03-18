@@ -7,7 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
@@ -48,9 +50,22 @@ public class SepcountActivity extends Activity {
         header.setText("分别记账");
 
         listView = (ListView) findViewById(R.id.member_sep_lv);
-        getMemberInfo();
+        memberList = UiUtility.getMemberInfo();
         MemberWithMAdapter adapter = new MemberWithMAdapter(SepcountActivity.this,R.layout.select_member_withm_item,memberList);
         listView.setAdapter(adapter);
+        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                listView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+                EditText eText = (EditText) view.findViewById(R.id.sep_money);
+                eText.requestFocus();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                listView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+            }
+        });
 
         Button button = (Button) findViewById(R.id.SepSaveButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +187,7 @@ public class SepcountActivity extends Activity {
         }
     }
 
-    private void getMemberInfo()
+    /*private void getMemberInfo()
     {
         memberList.clear();
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
@@ -183,5 +198,5 @@ public class SepcountActivity extends Activity {
             MemberInfoWithId info = new MemberInfoWithId(cursor.getInt(0),cursor.getString(1),cursor.getFloat(2));
             memberList.add(info);
         }
-    }
+    }*/
 }
