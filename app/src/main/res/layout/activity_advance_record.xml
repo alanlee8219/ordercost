@@ -8,11 +8,10 @@
     android:background="@color/white"
     tools:context="com.example.jcs.orderassistant.ui.AdvanceRecordActivity">
 
-    <ListView
+    <de.timroes.android.listview.EnhancedListView
         android:id="@+id/advance_Lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-    </ListView>
+        android:layout_weight="1"/>
 
 </RelativeLayout>

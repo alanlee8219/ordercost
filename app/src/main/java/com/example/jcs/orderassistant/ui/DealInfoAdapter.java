@@ -18,11 +18,33 @@ import java.util.List;
 public class DealInfoAdapter extends ArrayAdapter<DealInfo> {
 
     private int resourceId;
+    private  List<DealInfo> list;
 
     public DealInfoAdapter(Context context, int textViewResourceId,
                          List<DealInfo> objects) {
         super(context, textViewResourceId, objects);
+        list = objects;
         resourceId = textViewResourceId;
+    }
+
+    @Override
+    public int getCount() {
+        return list.size();
+    }
+
+    @Override
+    public DealInfo getItem(int position) {
+        return list.get(position);
+    }
+
+    public void remove(int position) {
+        list.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void insert(int position, DealInfo item) {
+        list.add(position, item);
+        notifyDataSetChanged();
     }
 
     @Override

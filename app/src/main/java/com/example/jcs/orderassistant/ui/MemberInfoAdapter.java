@@ -17,11 +17,33 @@ import java.util.List;
 public class MemberInfoAdapter extends ArrayAdapter<MemberInfo> {
 
     private int resourceId;
+    private  List<MemberInfo> list;
 
     public MemberInfoAdapter(Context context, int textViewResourceId,
                         List<MemberInfo> objects) {
         super(context, textViewResourceId, objects);
+        list = objects;
         resourceId = textViewResourceId;
+    }
+
+    @Override
+    public int getCount() {
+        return list.size();
+    }
+
+    @Override
+    public MemberInfo getItem(int position) {
+        return list.get(position);
+    }
+
+    public void remove(int position) {
+        list.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void insert(int position, MemberInfo item) {
+        list.add(position, item);
+        notifyDataSetChanged();
     }
 
     @Override

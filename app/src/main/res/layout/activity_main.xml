@@ -79,7 +79,7 @@
 
         </LinearLayout>
 
-        <ListView
+        <de.timroes.android.listview.EnhancedListView
             android:id="@+id/main_lv"
             style="@style/MatchMatch"
             android:layout_marginBottom="@dimen/test_padding_margin"

@@ -1,6 +1,9 @@
 package com.example.jcs.orderassistant.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +35,17 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
+import de.timroes.android.listview.EnhancedListView;
 
 public class MainActivity extends Activity implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private BGARefreshLayout mRefreshLayout;
 
-    private ListView listView = null;
+    private EnhancedListView listView = null;
     private List<DealInfo> dealInfoList = new ArrayList<DealInfo>();
+    private List<Integer> recordIdList = new  ArrayList<Integer>();
+    private List<Integer> delList = new  ArrayList<Integer>();
+    private DealInfoAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,19 +113,154 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
             }
         });
 
-        listView = (ListView) findViewById(R.id.main_lv);
+        listView = (EnhancedListView) findViewById(R.id.main_lv);
         getDealInfo();
-        DealInfoAdapter adapter = new DealInfoAdapter(MainActivity.this,R.layout.deal_item,dealInfoList);
-        listView.setAdapter(adapter);
+        mAdapter = new DealInfoAdapter(MainActivity.this,R.layout.deal_item,dealInfoList);
+        listView.setAdapter(mAdapter);
+
+        // Set the callback that handles dismisses.
+        listView.setDismissCallback(new de.timroes.android.listview.EnhancedListView.OnDismissCallback() {
+            @Override
+            public EnhancedListView.Undoable onDismiss(EnhancedListView listView, final int position) {
+                Integer id = recordIdList.get(position);
+                delList.add(id);
+
+                final DealInfo item = mAdapter.getItem(position);
+                mAdapter.remove(position);
+
+                return new EnhancedListView.Undoable() {
+                    @Override
+                    public void undo() {
+                        delList.remove(delList.size() - 1);
+                        mAdapter.insert(position, item);
+                    }
+
+                    @Override
+                    public String getTitle() {
+                        return "删除交易记录"; // Plz, use the resource system :)
+                    }
+
+                    @Override
+                    public void discard() {
+                        //恢复成员余额，删除子订单，删除订单
+                        //这里需要用一个事务
+                        DatabaseHelper dbHelper = OrderApplication.getDbHelper();
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                        db.beginTransaction();
+                        try {
+                            for(int i = 0;i<delList.size();i++)
+                            {
+                                //1，返现金额
+                                /*String id_query = "select * from " + DatabaseSchema.OrderEntry.TABLE_NAME
+                                        + " where " + DatabaseSchema.OrderEntry._ID + " = "
+                                        + delList.get(i);
+                                Cursor cursor = db.rawQuery(id_query, null);
+                                int returnM=0;
+                                while (cursor.moveToNext()) {
+                                    returnM = cursor.getInt(2);
+                                    break;
+                                }*/
+
+                                //2，按订单号查询子订单
+                                //String[] args = new String[delList.size()];
+                                String id_query = "select * from " + DatabaseSchema.SubOrderEntry.TABLE_NAME
+                                        + " where " + DatabaseSchema.SubOrderEntry.COLUMN_ORDERID + " = "
+                                        + delList.get(i);
+                                Cursor cursor = db.rawQuery(id_query, null);
+                                int count = 0;
+                                List<Integer> memberIdLst = new ArrayList<Integer>();
+                                List<Integer> subOrderIdLst = new ArrayList<Integer>();
+                                List<Float> moneyLst = new ArrayList<Float>();
+                                while (cursor.moveToNext()) {
+                                    subOrderIdLst.add(cursor.getInt(0));
+                                    moneyLst.add(cursor.getFloat(2));
+                                    memberIdLst.add(cursor.getInt(3));
+                                    count++;
+                                }
+
+                                for (int j=0;j<memberIdLst.size();j++) {
+                                    id_query = "select " +  DatabaseSchema.MemberEntry.COLUMN_MONEY
+                                            + " from " + DatabaseSchema.MemberEntry.TABLE_NAME
+                                            + " where " + MemberEntry._ID + " = "
+                                            + memberIdLst.get(j);
+
+                                    int money=0;
+                                    cursor = db.rawQuery(id_query, null);
+                                    while (cursor.moveToNext()) {
+                                        money = cursor.getInt(0);
+                                        break;
+                                    }
+
+                                    //3,修改余额
+                                    ContentValues values = new ContentValues();
+                                    values.clear();
+                                    values.put(DatabaseSchema.MemberEntry.COLUMN_MONEY, moneyLst.get(j) + money);
+                                    id_query = "" + DatabaseSchema.MemberEntry._ID + "= ?";
+                                    String[] arry = new String[1];
+                                    arry[0] = Integer.toString(memberIdLst.get(j));
+                                    db.update(DatabaseSchema.MemberEntry.TABLE_NAME, values, id_query, arry);
+                                }
+
+                                //4,删除子订单
+//                                String[] args = new String[subOrderIdLst.size()];
+                                for (int j=0;j<subOrderIdLst.size();j++){
+                                    String[] args = new String[1];
+                                    args[0] = Integer.toString(subOrderIdLst.get(j));
+                                    db.delete(DatabaseSchema.SubOrderEntry.TABLE_NAME,DatabaseSchema.SubOrderEntry._ID +" =?",
+                                            args);
+                                }
+
+                                //5,删除订单
+                                String[] mainId = new String[1];
+                                mainId[0] = Integer.toString(delList.get(i));
+                                db.delete(DatabaseSchema.OrderEntry.TABLE_NAME,DatabaseSchema.OrderEntry._ID +" =?",
+                                        mainId);
+
+                                db.setTransactionSuccessful();
+                            }
+                            ;
+                        } catch (Exception e) {
+                            ;
+                        }
+                        finally {
+                            db.endTransaction();
+                        }
+                }
+            }
+
+            ;
+
+        }
+    });
+
+        listView.enableSwipeToDismiss();
+        listView.setUndoStyle(EnhancedListView.UndoStyle.SINGLE_POPUP);
     }
 
-    protected void onRestart() {
+    @Override
+    protected void onStop() {
+        if(listView != null) {
+            listView.discardUndo();
+        }
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        if(listView != null) {
+            listView.discardUndo();
+        }
+        super.onPause();
+    }
+
+    /*protected void onRestart() {
         super.onRestart();
-        listView = (ListView) findViewById(R.id.main_lv);
+        listView = (EnhancedListView) findViewById(R.id.main_lv);
         getDealInfo();
         DealInfoAdapter adapter = new DealInfoAdapter(MainActivity.this,R.layout.deal_item,dealInfoList);
         listView.setAdapter(adapter);
-    }
+    }*/
 
     private void getDealInfo()
     {
@@ -128,6 +271,8 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                 + " order by " + DatabaseSchema.OrderEntry._ID +" desc";
         Cursor cursor = db.rawQuery(query,null);
         while (cursor.moveToNext()){
+            recordIdList.add(cursor.getInt(0));
+
             String detail ="";
             float sum = 0;
             int id = cursor.getInt(0);
