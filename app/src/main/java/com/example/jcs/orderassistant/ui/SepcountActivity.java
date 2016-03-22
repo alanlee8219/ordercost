@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -53,6 +54,7 @@ public class SepcountActivity extends Activity {
         memberList = UiUtility.getMemberInfo();
         MemberWithMAdapter adapter = new MemberWithMAdapter(SepcountActivity.this,R.layout.select_member_withm_item,memberList);
         listView.setAdapter(adapter);
+
         listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -66,6 +68,18 @@ public class SepcountActivity extends Activity {
                 listView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
             }
         });
+
+/*        EditText editText = (EditText) findViewById(R.id.sep_dinning);
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    int a = 0;
+                    a++;
+                }
+                return false;
+            }
+        });*/
 
         Button button = (Button) findViewById(R.id.SepSaveButton);
         button.setOnClickListener(new View.OnClickListener() {

@@ -2,6 +2,7 @@ package com.example.jcs.orderassistant.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,7 @@ import java.util.List;
 public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
 
     private int resourceId;
+    private int index;
 
     private  class ViewHolder
     {
@@ -37,12 +39,14 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
         super(context, textViewResourceId, objects);
         list = objects;
         resourceId = textViewResourceId;
+        index = -1;
         this.mInflater = LayoutInflater.from(context);
     }
 
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
         ViewHolder holder = null;
         MemberInfoWithId info = getItem(position); // 获取当前项的Member实例
 
@@ -94,9 +98,30 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
                         info.setEach(Float.valueOf(each));
                         //info.setEach(Integer.valueOf(each));
                     }
+                    //index = -1;
+                }else{
+                    //index = position;
+                    //index = -1;
                 }
             }
         });
+
+        holder.mEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    index = position;
+                }
+                return false;
+            }
+        });
+
+        holder.mEditText.clearFocus();
+       if (index != -1 && index == position) {
+            // 如果当前的行下标和点击事件中保存的index一致，手动为EditText设置焦点。
+            holder.mEditText.requestFocus();
+           holder.mEditText.setSelection( holder.mEditText.getText().length());
+        }
 
        // holder.mEditText.setText(Integer.toString(info.getEach()));
         holder.myCheckText.setChecked(info.getSelected());

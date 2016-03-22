@@ -254,13 +254,13 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
         super.onPause();
     }
 
-    /*protected void onRestart() {
+    protected void onRestart() {
         super.onRestart();
         listView = (EnhancedListView) findViewById(R.id.main_lv);
         getDealInfo();
         DealInfoAdapter adapter = new DealInfoAdapter(MainActivity.this,R.layout.deal_item,dealInfoList);
         listView.setAdapter(adapter);
-    }*/
+    }
 
     private void getDealInfo()
     {

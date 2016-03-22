@@ -20,7 +20,9 @@
         <activity
             android:name=".ui.AACountActivity"
             android:label="@string/title_activity_aacount"
-            android:theme="@style/activityTitlebar" >
+            android:theme="@style/activityTitlebar"
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
         <activity
             android:name=".ui.AddMemberActivity"
@@ -28,7 +30,8 @@
         </activity>
         <activity
             android:name=".ui.SepcountActivity"
-            android:label="@string/title_activity_sepcount" >
+            android:label="@string/title_activity_sepcount"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".ui.ReceiveMoneyActivity"
