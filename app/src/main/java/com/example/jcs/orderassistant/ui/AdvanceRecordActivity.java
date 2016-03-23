@@ -70,12 +70,50 @@ public class AdvanceRecordActivity extends Activity {
                     @Override public void discard() {
                         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
                         SQLiteDatabase db = dbHelper.getWritableDatabase();
-                        String[] args = new String[delList.size()];
-                        for (int i=0;i<delList.size();i++){
-                            args[i] = Integer.toString(delList.get(i));
+
+                        db.beginTransaction();
+                        try {
+                            String[] args = new String[delList.size()];
+                            for (int i = 0; i < delList.size(); i++) {
+                                args[i] = Integer.toString(delList.get(i));
+                                String id_query = "select * from " + DatabaseSchema.AdvanceEntry.TABLE_NAME
+                                        + " where " + DatabaseSchema.AdvanceEntry._ID + " = "
+                                        + delList.get(i);
+                                Cursor cursor = db.rawQuery(id_query, null);
+                                while (cursor.moveToNext()) {
+                                    int memberId = cursor.getInt(1);
+                                    float money = cursor.getFloat(3);
+
+                                    String memberQuery = "select * from " + DatabaseSchema.MemberEntry.TABLE_NAME
+                                            + " where " + DatabaseSchema.MemberEntry._ID + " = "
+                                            + memberId;
+                                    Cursor memberCursor = db.rawQuery(memberQuery, null);
+                                    while (memberCursor.moveToNext()) {
+                                        money= memberCursor.getFloat(2) - money;
+                                        break;
+                                    }
+
+                                    ContentValues values = new ContentValues();
+                                    values.clear();
+                                    values.put(DatabaseSchema.MemberEntry.COLUMN_MONEY, money);
+                                    memberQuery = "" + DatabaseSchema.MemberEntry._ID + "= ?";
+                                    String[] arry = new String[1];
+                                    arry[0] = Integer.toString(memberId);
+                                    db.update(DatabaseSchema.MemberEntry.TABLE_NAME, values, memberQuery, arry);
+                                }
+                                recordIdList.remove(delList.get(i));
+                            }
+                            db.delete(DatabaseSchema.AdvanceEntry.TABLE_NAME, DatabaseSchema.AdvanceEntry._ID + " =?",
+                                    args);
+                            db.setTransactionSuccessful();
+
+                        }catch (Exception e) {
+                            ;
                         }
-                        db.delete(DatabaseSchema.AdvanceEntry.TABLE_NAME,DatabaseSchema.AdvanceEntry._ID +" =?",
-                                args);
+                        finally {
+                            db.endTransaction();
+                        }
+                        delList.clear();
 
                     }
                 };

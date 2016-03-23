@@ -6,12 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jcs.orderassistant.db.DatabaseHelper;
 import com.example.jcs.orderassistant.db.DatabaseSchema;
@@ -44,10 +47,25 @@ public class ReceiveMoneyActivity extends Activity {
         MemberWithMAdapter adapter = new MemberWithMAdapter(ReceiveMoneyActivity.this,R.layout.select_member_withm_item,memberList);
         listView.setAdapter(adapter);
 
-        Button button = (Button) findViewById(R.id.RMSaveButton);
+        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                listView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+                EditText eText = (EditText) view.findViewById(R.id.sep_money);
+                eText.requestFocus();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                listView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+            }
+        });
+
+        final Button button = (Button) findViewById(R.id.RMSaveButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                button.requestFocus();
                 saveRMCount();
                 finish();
             }
@@ -60,14 +78,10 @@ public class ReceiveMoneyActivity extends Activity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        //MemberWithMAdapter adapter = (MemberWithMAdapter)listView.getAdapter();
-
-        //for (int i=0;i<adapter.isSelected.size() ;i++)
-        //{
-        //    if (adapter.isSelected.get(i) == true ){
         for (int i=0;i<memberList.size() ;i++)
         {
             if (memberList.get(i).getSelected() == true ){
+
                 Float sep = memberList.get(i).getEach();
                 if (sep.compareTo(0.0f) == 0) continue;
 

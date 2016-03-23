@@ -15,7 +15,8 @@
         <ListView
             android:id="@+id/member_rm_lv"
             android:layout_width="match_parent"
-            android:layout_height="400dp">
+            android:layout_height="400dp"
+            android:descendantFocusability="beforeDescendants">
         </ListView>
 
         <Button

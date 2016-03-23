@@ -39,7 +39,7 @@ public class DealInfoAdapter extends ArrayAdapter<DealInfo> {
 
     public void remove(int position) {
         list.remove(position);
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     public void insert(int position, DealInfo item) {

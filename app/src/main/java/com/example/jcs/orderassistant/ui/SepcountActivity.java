@@ -69,18 +69,6 @@ public class SepcountActivity extends Activity {
             }
         });
 
-/*        EditText editText = (EditText) findViewById(R.id.sep_dinning);
-        editText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    int a = 0;
-                    a++;
-                }
-                return false;
-            }
-        });*/
-
         Button button = (Button) findViewById(R.id.SepSaveButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,25 +149,13 @@ public class SepcountActivity extends Activity {
                 count++;
             }
         }
-        /*MemberWithMAdapter adapter = (MemberWithMAdapter)listView.getAdapter();
-        for (int i=0;i<adapter.isSelected.size() ;i++) {
-            if (adapter.isSelected.get(i) == true ) count++;
-        }*/
 
         float return_each = m/count;
-
-       /* for (int i=0;i<adapter.isSelected.size() ;i++)
-        {
-            if (adapter.isSelected.get(i) == true ){*/
 
         for (int i=0;i<memberList.size() ;i++)
         {
             if (memberList.get(i).getSelected() == true ){
 
-                /*View view = listView.getChildAt(i);
-                EditText editText = (EditText) view.findViewById(R.id.sep_money);
-                String sep_money = editText.getText().toString();
-                float sep = Integer.parseInt(sep_money) - return_each;*/
                 float sep = memberList.get(i).getEach() - return_each;
 
                 //加子订单
@@ -200,17 +176,4 @@ public class SepcountActivity extends Activity {
             }
         }
     }
-
-    /*private void getMemberInfo()
-    {
-        memberList.clear();
-        DatabaseHelper dbHelper = OrderApplication.getDbHelper();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String query = "select * from " + DatabaseSchema.MemberEntry.TABLE_NAME;
-        Cursor cursor = db.rawQuery(query,null);
-        while (cursor.moveToNext()){
-            MemberInfoWithId info = new MemberInfoWithId(cursor.getInt(0),cursor.getString(1),cursor.getFloat(2));
-            memberList.add(info);
-        }
-    }*/
 }

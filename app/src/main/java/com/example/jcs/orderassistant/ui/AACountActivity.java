@@ -65,15 +65,6 @@ public class AACountActivity extends Activity {
         TextView header = (TextView) findViewById(R.id.header_text);
         header.setText("AA记账");
 
-
-        /*Button return_button = (Button) findViewById(R.id.header_return);
-        return_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });*/
-
         Calendar calendar1 = Calendar.getInstance();
         AACountActivity.year = calendar1.get(Calendar.YEAR);
         AACountActivity.month = calendar1.get(Calendar.MONTH);
@@ -148,13 +139,7 @@ public class AACountActivity extends Activity {
         long ordid = db.insert(OrderEntry.TABLE_NAME, null, values);
         values.clear();
 
-        /*String query = "select last last_insert_rowid() from "+OrderEntry.TABLE_NAME;
-        Cursor cursor = db.rawQuery(query,null);
-        int ordid = 0;
-        if (cursor.moveToFirst()) ordid = cursor.getInt(0);*/
-
         //加子订单
-
         int sum_money = Integer.parseInt(s);
 
         int count = 0;
@@ -164,9 +149,6 @@ public class AACountActivity extends Activity {
         }
 
         float each = (float)(sum_money-m)/count;
-
-
-//        float return_each = (float)m/count;
 
         for (int i=0;i<adapter.isSelected.size() ;i++)
         {

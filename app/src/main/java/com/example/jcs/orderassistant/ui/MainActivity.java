@@ -123,6 +123,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
             @Override
             public EnhancedListView.Undoable onDismiss(EnhancedListView listView, final int position) {
                 Integer id = recordIdList.get(position);
+                delList.clear();
                 delList.add(id);
 
                 final DealInfo item = mAdapter.getItem(position);
@@ -149,21 +150,8 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
 
                         db.beginTransaction();
                         try {
-                            for(int i = 0;i<delList.size();i++)
-                            {
-                                //1，返现金额
-                                /*String id_query = "select * from " + DatabaseSchema.OrderEntry.TABLE_NAME
-                                        + " where " + DatabaseSchema.OrderEntry._ID + " = "
-                                        + delList.get(i);
-                                Cursor cursor = db.rawQuery(id_query, null);
-                                int returnM=0;
-                                while (cursor.moveToNext()) {
-                                    returnM = cursor.getInt(2);
-                                    break;
-                                }*/
-
-                                //2，按订单号查询子订单
-                                //String[] args = new String[delList.size()];
+                            for (int i = 0; i < delList.size(); i++) {
+                                //1，按订单号查询子订单
                                 String id_query = "select * from " + DatabaseSchema.SubOrderEntry.TABLE_NAME
                                         + " where " + DatabaseSchema.SubOrderEntry.COLUMN_ORDERID + " = "
                                         + delList.get(i);
@@ -179,20 +167,20 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                                     count++;
                                 }
 
-                                for (int j=0;j<memberIdLst.size();j++) {
-                                    id_query = "select " +  DatabaseSchema.MemberEntry.COLUMN_MONEY
+                                for (int j = 0; j < memberIdLst.size(); j++) {
+                                    id_query = "select " + DatabaseSchema.MemberEntry.COLUMN_MONEY
                                             + " from " + DatabaseSchema.MemberEntry.TABLE_NAME
                                             + " where " + MemberEntry._ID + " = "
                                             + memberIdLst.get(j);
 
-                                    int money=0;
+                                    int money = 0;
                                     cursor = db.rawQuery(id_query, null);
                                     while (cursor.moveToNext()) {
                                         money = cursor.getInt(0);
                                         break;
                                     }
 
-                                    //3,修改余额
+                                    //2,修改余额
                                     ContentValues values = new ContentValues();
                                     values.clear();
                                     values.put(DatabaseSchema.MemberEntry.COLUMN_MONEY, moneyLst.get(j) + money);
@@ -202,39 +190,40 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                                     db.update(DatabaseSchema.MemberEntry.TABLE_NAME, values, id_query, arry);
                                 }
 
-                                //4,删除子订单
-//                                String[] args = new String[subOrderIdLst.size()];
-                                for (int j=0;j<subOrderIdLst.size();j++){
+                                //3,删除子订单
+                                for (int j = 0; j < subOrderIdLst.size(); j++) {
                                     String[] args = new String[1];
                                     args[0] = Integer.toString(subOrderIdLst.get(j));
-                                    db.delete(DatabaseSchema.SubOrderEntry.TABLE_NAME,DatabaseSchema.SubOrderEntry._ID +" =?",
+                                    db.delete(DatabaseSchema.SubOrderEntry.TABLE_NAME, DatabaseSchema.SubOrderEntry._ID + " =?",
                                             args);
                                 }
 
-                                //5,删除订单
+                                recordIdList.remove(delList.get(i));
+
+                                //4,删除订单
                                 String[] mainId = new String[1];
                                 mainId[0] = Integer.toString(delList.get(i));
-                                db.delete(DatabaseSchema.OrderEntry.TABLE_NAME,DatabaseSchema.OrderEntry._ID +" =?",
+                                db.delete(DatabaseSchema.OrderEntry.TABLE_NAME, DatabaseSchema.OrderEntry._ID + " =?",
                                         mainId);
-
-                                db.setTransactionSuccessful();
                             }
+                            db.setTransactionSuccessful();
                             ;
                         } catch (Exception e) {
                             ;
-                        }
-                        finally {
+                        } finally {
                             db.endTransaction();
                         }
+                        delList.clear();
+                    }
                 }
+
+                        ;
+
             }
+        });
 
-            ;
-
-        }
-    });
-
-        listView.enableSwipeToDismiss();
+//        listView.enableSwipeToDismiss();
+        listView.disableSwipeToDismiss();
         listView.setUndoStyle(EnhancedListView.UndoStyle.SINGLE_POPUP);
     }
 
@@ -265,6 +254,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
     private void getDealInfo()
     {
         dealInfoList.clear();
+        recordIdList.clear();
         DatabaseHelper dbHelper = OrderApplication.getDbHelper();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String query = "select * from " + DatabaseSchema.OrderEntry.TABLE_NAME

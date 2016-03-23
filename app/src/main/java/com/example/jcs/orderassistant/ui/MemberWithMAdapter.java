@@ -1,6 +1,8 @@
 package com.example.jcs.orderassistant.ui;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,6 +35,7 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
 
     private List<MemberInfoWithId> list;
     private LayoutInflater mInflater;
+    HashMap<Integer, String> hashMap = new HashMap<Integer, String>();
 
     public MemberWithMAdapter(Context context, int textViewResourceId,
                          List<MemberInfoWithId> objects) {
@@ -87,22 +90,32 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
         holder.mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus == false) {
-                    //final int p1 = v.getId();
-                    //MemberInfoWithId info = (MemberInfoWithId) finalViewHolder.mEditText.getTag();
+                //if (hasFocus == false) {
                     MemberInfoWithId info = list.get(position);
-                    //EditText edit = (EditText) v.findViewById(R.id.sep_money);
                     EditText edit = (EditText) v;
                     String each = edit.getText().toString();
                     if (!each.isEmpty()) {
                         info.setEach(Float.valueOf(each));
-                        //info.setEach(Integer.valueOf(each));
                     }
-                    //index = -1;
-                }else{
-                    //index = position;
-                    //index = -1;
-                }
+            }
+        });
+
+        holder.mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                hashMap.put(position, s.toString());
+                MemberInfoWithId info1 = list.get(position);
+                info1.setEach(Float.valueOf(s.toString()));
             }
         });
 
@@ -120,12 +133,21 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
        if (index != -1 && index == position) {
             // 如果当前的行下标和点击事件中保存的index一致，手动为EditText设置焦点。
             holder.mEditText.requestFocus();
-           holder.mEditText.setSelection( holder.mEditText.getText().length());
+            holder.mEditText.setSelection( holder.mEditText.getText().length());
         }
 
-       // holder.mEditText.setText(Integer.toString(info.getEach()));
         holder.myCheckText.setChecked(info.getSelected());
         holder.myCheckText.setText(info.getName());
+
+        //如果hashMap不为空，就设置的editText
+        if(hashMap.get(position) != null){
+            holder.mEditText.setText(hashMap.get(position));
+            String each = holder.mEditText.getText().toString();
+            if (!each.isEmpty()) {
+                MemberInfoWithId info1 = list.get(position);
+                info1.setEach(Float.valueOf(each));
+            }
+        }
 
         return convertView;
     }

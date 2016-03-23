@@ -35,7 +35,8 @@
         </activity>
         <activity
             android:name=".ui.ReceiveMoneyActivity"
-            android:label="@string/title_activity_receive_money" >
+            android:label="@string/title_activity_receive_money"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".ui.BanlaceActivity"

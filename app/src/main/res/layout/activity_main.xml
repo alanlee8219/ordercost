@@ -89,8 +89,7 @@
             android:overScrollMode="never"
             android:paddingBottom="@dimen/test_padding_margin"
             android:paddingTop="@dimen/test_padding_margin"
-            android:scrollbars="none"
-            tools:listitem="@layout/item_normal" />
+            android:scrollbars="none" />
 
     </cn.bingoogolapple.refreshlayout.BGAStickyNavLayout>
 </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
