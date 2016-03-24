@@ -173,10 +173,10 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                                             + " where " + MemberEntry._ID + " = "
                                             + memberIdLst.get(j);
 
-                                    int money = 0;
+                                    float money = 0;
                                     cursor = db.rawQuery(id_query, null);
                                     while (cursor.moveToNext()) {
-                                        money = cursor.getInt(0);
+                                        money = cursor.getFloat(0);
                                         break;
                                     }
 
@@ -293,7 +293,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                 detail += " "+ UiUtility.getMoneyStr(each) + " ";
             }
 
-            DealInfo info = new DealInfo(dining,dateStr,(int)sum,detail);
+            DealInfo info = new DealInfo(dining,dateStr,sum,detail);
             dealInfoList.add(info);
         }
     }

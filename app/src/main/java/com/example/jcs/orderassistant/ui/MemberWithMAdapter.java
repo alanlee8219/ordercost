@@ -115,7 +115,12 @@ public class MemberWithMAdapter extends ArrayAdapter<MemberInfoWithId> {
             public void afterTextChanged(Editable s) {
                 hashMap.put(position, s.toString());
                 MemberInfoWithId info1 = list.get(position);
-                info1.setEach(Float.valueOf(s.toString()));
+                String str = s.toString();
+                if (str.isEmpty()) {
+                    info1.setEach(0);
+                }else{
+                    info1.setEach(Float.valueOf(str));
+                }
             }
         });
 

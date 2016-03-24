@@ -7,10 +7,10 @@ public class DealInfo {
 
     private String dining;
     private String date;
-    private int money;
+    private float money;
     private String detail;
 
-    public DealInfo(String dining,String date,int money,String detail){
+    public DealInfo(String dining,String date,float money,String detail){
         this.dining = dining;
         this.date = date;
         this.money = money;
@@ -29,7 +29,7 @@ public class DealInfo {
         return  detail;
     }
 
-    public int getMoney(){
+    public float getMoney(){
         return money;
     }
 }
