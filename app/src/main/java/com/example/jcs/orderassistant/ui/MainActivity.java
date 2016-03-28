@@ -222,8 +222,8 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
             }
         });
 
-//        listView.enableSwipeToDismiss();
-        listView.disableSwipeToDismiss();
+        listView.enableSwipeToDismiss();
+//        listView.disableSwipeToDismiss();
         listView.setUndoStyle(EnhancedListView.UndoStyle.SINGLE_POPUP);
     }
 

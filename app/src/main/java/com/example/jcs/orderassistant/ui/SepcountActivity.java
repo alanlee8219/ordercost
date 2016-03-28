@@ -150,7 +150,8 @@ public class SepcountActivity extends Activity {
             }
         }
 
-        float return_each = m/count;
+        float return_each = (float)m;
+        return_each = UiUtility.getMoneyfloat(return_each/count);
 
         for (int i=0;i<memberList.size() ;i++)
         {
