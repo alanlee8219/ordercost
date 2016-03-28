@@ -22,9 +22,15 @@ V1.00a
 
 已知BUG  
 1. 交易记录删除后显示不正确（数据库中的记录正确）
+---  
 
 TODO    
-1. 替换ListView为RecycleView（解决BUG1）
+1. 替换ListView为RecycleView（解决BUG1）  
 2. 微信分享  
+---  
+
+Note  
+本项目为Android 练手之作，设计及编码风格都不足取。贻笑方家。  
+---  
 
 感谢韩同学不怕麻烦，帮我们订餐和管理账务。  
