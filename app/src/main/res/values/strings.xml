@@ -5,7 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="aa_account">AA记账</string>
     <string name="individual_account">单独记账</string>
+    <string name="member">成员管理</string>
     <string name="add_member">增加成员</string>
+    <string name="del_member">减少成员</string>
     <string name="balance">余额一览</string>
     <string name="receive_money">入账</string>
     <string name="find_money">查账</string>
@@ -41,6 +43,6 @@
     <string name="text_back">返回</string>
     <string name="title_activity_banlace">BanlaceActivity</string>
     <string name="title_activity_advance_record">AdvanceRecordActivity</string>
-
+    <string name="title_activity_detail">DetailActivity</string>
 
 </resources>

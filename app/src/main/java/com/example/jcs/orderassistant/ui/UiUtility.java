@@ -77,6 +77,7 @@ public class UiUtility {
                 + " order by " + DatabaseSchema.MemberEntry._ID ;
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()){
+            if (cursor.getInt(3) == 1) continue;
             MemberInfoWithId info = new MemberInfoWithId(cursor.getInt(0),cursor.getString(1),cursor.getFloat(2));
             memberList.add(info);
         }

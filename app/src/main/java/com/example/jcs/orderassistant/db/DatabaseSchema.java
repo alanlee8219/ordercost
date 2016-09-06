@@ -48,6 +48,8 @@ public class DatabaseSchema {
         public static final String COLUMN_NAME = "name";
 
         public static final String COLUMN_MONEY = "money";
+
+        public static final String COLUMN_DEL = "del";
     };
 
     public static abstract class AdvanceEntry implements BaseColumns {

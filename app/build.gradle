@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0 rc3"
 
     defaultConfig {
-        applicationId "com.example.jcs.orderassistant"
+        applicationId "com.gmail.alanlee8219.orderassistant"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1

@@ -117,10 +117,10 @@ public class AACountActivity extends Activity {
             c = "0";
         }
 
-        if ((!UiUtility.isInteger(s)) || !UiUtility.isInteger(c)){
+        /*if ((!UiUtility.isInteger(s)) || !UiUtility.isInteger(c)){
             Toast.makeText(AACountActivity.this,"金额格式不正确",Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         if (d.isEmpty()) {
             d = "未知商家";
@@ -140,8 +140,7 @@ public class AACountActivity extends Activity {
         values.clear();
 
         //加子订单
-        int sum_money = Integer.parseInt(s);
-
+        float sum_money = Float.parseFloat(s);
         int count = 0;
         MemberAdapter adapter = (MemberAdapter)listView.getAdapter();
         for (int i=0;i<adapter.isSelected.size() ;i++) {

@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jcs.orderassistant" >
 
@@ -21,8 +21,7 @@
             android:name=".ui.AACountActivity"
             android:label="@string/title_activity_aacount"
             android:theme="@style/activityTitlebar"
-            android:windowSoftInputMode="adjustPan"
-            >
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".ui.AddMemberActivity"
@@ -31,12 +30,12 @@
         <activity
             android:name=".ui.SepcountActivity"
             android:label="@string/title_activity_sepcount"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".ui.ReceiveMoneyActivity"
             android:label="@string/title_activity_receive_money"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".ui.BanlaceActivity"
@@ -45,6 +44,10 @@
         <activity
             android:name=".ui.AdvanceRecordActivity"
             android:label="@string/title_activity_advance_record" >
+        </activity>
+        <activity
+            android:name=".ui.DetailActivity"
+            android:label="@string/title_activity_detail" >
         </activity>
     </application>
 

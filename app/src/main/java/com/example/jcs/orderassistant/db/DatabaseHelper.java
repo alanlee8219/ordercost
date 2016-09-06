@@ -45,6 +45,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + DatabaseSchema.MemberEntry.TABLE_NAME + " (" + DatabaseSchema.MemberEntry._ID + ") ON DELETE SET NULL "
             + ");";
 
+    private static final String UPDATE_DEL_FLAG = "alter table " +  DatabaseSchema.MemberEntry.TABLE_NAME
+            + " add column " + DatabaseSchema.MemberEntry.COLUMN_DEL + " integer default 0 " ;
+
     /**
      * Constructor
      * @param context Application context
@@ -65,7 +68,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        switch (oldVersion) {
+            case 1:
+                db.execSQL(UPDATE_DEL_FLAG);
+            default:
+                break;
+        }
     }
 
     private void createDatabaseTables(SQLiteDatabase db) {
@@ -74,30 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SubOrder_TABLE_CREATE);
         db.execSQL(Member_TABLE_CREATE);
         db.execSQL(ADVANCE_TABLE_CREATE);
+        db.execSQL(UPDATE_DEL_FLAG);
     }
-
-    /*private void insertDefaultMember(SQLiteDatabase db) {
-        ContentValues values = new ContentValues();
-        OrderApplication app = OrderApplication.getInstance();
-        String name = app.getString(R.string.member_han);
-        values.put(MemberEntry.COLUMN_NAME,name);
-        db.insert(MemberEntry.TABLE_NAME, null, values);
-        values.clear();
-        name = app.getString(R.string.member_guan);
-        values.put(MemberEntry.COLUMN_NAME,name);
-        db.insert(MemberEntry.TABLE_NAME, null, values);
-        values.clear();
-        name = app.getString(R.string.member_li);
-        values.put(MemberEntry.COLUMN_NAME,name);
-        db.insert(MemberEntry.TABLE_NAME, null, values);
-        values.clear();
-        name = app.getString(R.string.member_tian);
-        values.put(MemberEntry.COLUMN_NAME,name);
-        db.insert(MemberEntry.TABLE_NAME, null, values);
-        values.clear();
-        name = app.getString(R.string.member_zhu);
-        values.put(MemberEntry.COLUMN_NAME,name);
-        db.insert(MemberEntry.TABLE_NAME,null,values);
-    }*/
 }
 

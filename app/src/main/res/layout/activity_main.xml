@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/button_shape"
-                android:text="@string/add_member"/>
+                android:text="@string/member"/>
 
             <Button
                 android:id="@+id/AAButton"

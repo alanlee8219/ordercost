@@ -56,6 +56,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/addM_line2"
         android:gravity="center"
-        android:text="@string/save"/>
+        android:text="@string/add_member"/>
+
+    <Button
+        android:id="@+id/addM_del"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addM_save"
+        android:gravity="center"
+        android:text="@string/del_member"/>
 
 </RelativeLayout>
